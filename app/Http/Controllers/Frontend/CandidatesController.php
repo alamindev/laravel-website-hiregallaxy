@@ -113,9 +113,24 @@ class CandidatesController extends Controller
 
  
 
-        $pdf = PDF::loadView('frontend.pages.candidates.show-resume', compact('data','label', 'arr'));
+        return view('frontend.pages.candidates.print-test', compact('label', 'data','arr'));
+        
+        // $pdf = PDF::loadView('frontend.pages.candidates.show-resume', compact('data','label', 'arr'));
 
-        return $pdf->stream('candidate-resume.pdf'); 
+        // $pdf = PDF::setOptions([
+        //         'isJavascriptEnabled' => true,
+        //         'isHtml5ParserEnabled' => true,
+        //         'isRemoteEnabled' => true,
+        //         'isPhpEnabled' => true,
+        //         'javascriptDelay' => 5000,
+        //         // 'images' => true,
+        //         // 'enable-smart-shrinking' => true,
+        //         // 'no-stop-slow-scripts' => true,
+                
+        //     ])
+        //     ->loadView('frontend.pages.candidates.print-test', compact('data','label', 'arr'));
+            
+        // return $pdf->stream('candidate-resume.pdf'); 
     }
 
     public function search(Request $request)
@@ -284,7 +299,7 @@ class CandidatesController extends Controller
             'gender' => 'required',
             'discipline' => 'required',
 
-            'profile_picture' => 'nullable|image',
+            // 'profile_picture' => 'nullable|image',
 
             'cv' => 'nullable|mimes:pdf',
 
@@ -319,7 +334,7 @@ class CandidatesController extends Controller
             $user->profile_picture = ImageUploadHelper::update('profile_picture', $request->file('profile_picture'), 'pr-' . time(), 'images/users', 'images/users/' . $user->profile_picture);
 
         }
-
+        
         $user->save();
         $discipline = implode(',', $request->discipline);
         if ($request->cv) {
@@ -502,6 +517,84 @@ class CandidatesController extends Controller
         $user->received_messages()->update(['is_seen' => 1]);
 
         return view('frontend.pages.candidates.messages', compact('user', 'received_messages', 'sent_messages'));
+
+    }
+
+    public function changePassword()
+    {
+
+        if (!Auth::check()) {
+
+            session()->flash('error', 'Sorry   You are not an authenticated Employer  ');
+
+            return back();
+
+        }
+
+        $user = Auth::user();
+
+        $user_id = $user->id;
+
+        return view('frontend.pages.candidates.change', compact('user'));
+
+    }
+
+    public function passwordChangeUpdate(Request $request)
+    {
+    
+        if (!Auth::check()) {
+
+            session()->flash('error', 'Sorry   You are not an authenticated Employer  ');
+
+            return back();
+
+        }
+
+    
+        $this->validate($request, [
+
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|min:8',
+            'old_password' => 'required|min:8',
+
+        ]);
+
+        
+        $user = Auth::user();
+
+        $user_id = $user->id;
+
+
+        if($request->new_password != $request->confirm_password)
+        {
+            session()->flash('error', 'Confirm Password Must Be Same !');
+        }
+        else
+        {
+            $checkPassword = User::where('id', $user_id)->first();
+
+            if($checkPassword)
+            {
+                if(password_verify($request->old_password,$checkPassword->password))
+                {
+
+                    $profile = User::find($user_id);
+                    $profile->password = bcrypt($request->new_password);
+                    $profile->save();
+                    session()->flash('success', 'Password Changed SuccessFully !');
+                }
+                else
+                {
+                    session()->flash('error', 'Old Password Does Not Match !');
+                }
+            }
+            else
+            {
+                session()->flash('error', 'No data found !');
+            }
+            
+            return back();
+        }
 
     }
 

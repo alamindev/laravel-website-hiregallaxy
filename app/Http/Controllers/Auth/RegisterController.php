@@ -141,7 +141,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
+        
         $validator = \Validator::make($request->all(), [
 
             'username' => 'required|alpha_num|max:30|unique:users',

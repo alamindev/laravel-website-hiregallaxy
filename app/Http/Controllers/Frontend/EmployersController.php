@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+
+use App\Notifications\StatusEmail;
 use App\Helpers\General\CollectionHelper;
 use App\Helpers\ImageUploadHelper;
 use App\Http\Controllers\Controller;
@@ -242,7 +244,28 @@ class EmployersController extends Controller
 
         }
 
-        $user = Auth::user();
+        // $user = Auth::user();
+
+        $userData = DB::table('job_activities')->where('id', $id)->first();
+        
+        if($userData){
+            
+            $user_id = $userData->user_id;
+            $user = User::find($user_id);
+            $data['name'] = $name = $user->name;
+            $data['email'] = $email = $user->email;
+            $data['username'] = $username = $user->username;
+                    
+            $jobId = $userData->job_id;
+            $jobs = DB::table('jobs')->where('id', $jobId)->first();
+
+            $user['id'] = $jobs->id;
+            $user['title'] = $jobs->title;
+            $user['slug'] = $jobs->slug;
+            $user['status'] = $request->status;
+            
+            $user->notify(new StatusEmail($user));
+        }
 
         if ($request->status == 'Hired') {
             $timezone = date_default_timezone_get();
@@ -303,7 +326,7 @@ class EmployersController extends Controller
 
             'category_id' => 'required|numeric',
 
-            'profile_picture' => 'nullable|image',
+            // 'profile_picture' => 'nullable|image',
 
             'website' => 'nullable',
 
@@ -1003,6 +1026,7 @@ Dashboard icons
             return view('frontend.pages.employers.candidate', compact('user', 'applicant', 'status', 'slug'));
 
         }
+
         return redirect()->back();
 
 
@@ -1146,5 +1170,102 @@ end
         }
 
     }
+    
+
+    public function changePassword()
+    {
+
+        if (!Auth::check()) {
+
+            session()->flash('error', 'Sorry  You are not an authenticated Employer  ');
+
+            return back();
+
+        }
+
+        $user = User::where('id', auth()->user()->id)
+            ->with('teams')
+            ->first();
+
+        $collection = collect($user->teams);
+        $filtered_id = $collection->pluck('id');
+
+        $team_job_count = Job::whereIn('user_id', $filtered_id)->count();
+
+        $applicant_count = JobActivity::whereIn('company_id', $filtered_id)->count();
+        $new_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'New')->count();
+        $short_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'Shortlisted')->count();
+        $interview_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'Interview')->count();
+        $offered_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'Offered')->count();
+        $hired_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'Hired')->count();
+        $reject_count = JobActivity::whereIn('company_id', $filtered_id)->where('status', 'Rejected')->count();
+
+        $candidates = JobActivity::all();
+
+        return view('frontend.pages.employers.change',
+            compact('user', 'candidates', 'team_job_count', 'applicant_count', 'new_count', 'short_count', 'interview_count', 'offered_count', 'hired_count', 'reject_count'));
+
+    }
+
+    public function passwordChangeUpdate(Request $request)
+    {
+    
+        if (!Auth::check()) {
+
+            session()->flash('error', 'Sorry   You are not an authenticated Employer  ');
+
+            return back();
+
+        }
+
+    
+        $this->validate($request, [
+
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|min:8',
+            'old_password' => 'required|min:8',
+
+        ]);
+
+        
+        $user = Auth::user();
+
+        $user_id = $user->id;
+
+
+        if($request->new_password != $request->confirm_password)
+        {
+            session()->flash('error', 'Confirm Password Must Be Same !');
+        }
+        else
+        {
+            $checkPassword = User::where('id', $user_id)->first();
+
+            if($checkPassword)
+            {
+                if(password_verify($request->old_password,$checkPassword->password))
+                {
+
+                    $profile = User::find($user_id);
+                    $profile->password = bcrypt($request->new_password);
+                    $profile->save();
+                    session()->flash('success', 'Password Changed SuccessFully !');
+                }
+                else
+                {
+                    session()->flash('error', 'Old Password Does Not Match !');
+                }
+            }
+            else
+            {
+                session()->flash('error', 'No data found !');
+            }
+            
+            return back();
+        }
+
+    }
+    
+    
 
 }

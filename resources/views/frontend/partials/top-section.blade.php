@@ -13,7 +13,7 @@
 				@include('frontend.pages.partials.search-home', ['route' => route('searches') ])
 				<div class="companies-more">
 					<div class="row align-items-center">
-						<div class="col-lg-7">
+						<div class="col-lg-7">Find Your Dream Job
 							<div class="row">
 								<div class="wow slideInLeft col-4 custom__back ">
 									<div class=" d-flex align-items-start">
@@ -140,13 +140,16 @@
 
 					<div class="d-flex">
 						<div class="job-searchbox">
-							<div class="input__search">
-								<input type="text" name="job" class="form-control" placeholder="Find Job: title, keywords">
-							</div>
 
-							<div class="input__city">
-								<input type="text" name="location" class="form-control" placeholder="Where: city">
-							</div>
+            				<div class="input__search">
+            					<input type="text" name="job" class="form-control" placeholder="Find Job: title, keyword" value="{{ request()->has('job') ? request()->get('job') : '' }}">
+            				</div>
+            
+            				<div class="input__city">
+            					<input type="text" name="location" class="form-control" placeholder="Location:{{ request()->has('location') ? request()->get('location') : 'all' }} " value="Location:{{ request()->has('location') ? request()->get('location') : 'all' }} ">
+            				</div> 
+							
+							
 							<div class="custom__search_bar">
 								<div class="input__submit">
 									<button type="submit"><i class="fa fa-search"></i></button>
@@ -158,7 +161,7 @@
 							</div>
 						</div> <!-- End Searchbox -->
 						<div class="advanced__search">
-							<button class="job--advanced-search" type="button"><i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+							<button style="border: 1px solid #cdcdcd;" class="job--advanced-search" type="button"><i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
@@ -179,7 +182,7 @@
 
 								<option data-icon="fa fa-star" value="all">All Experience</option>
 
-								@foreach (App\Models\Experience::orderBy('name', 'asc')->get() as $exp)
+								@foreach (App\Models\Experience::orderBy('sort', 'asc')->where('status',1)->get() as $exp)
 
 								<option value="{{ $exp->slug }}">{{ $exp->name }}</option>
 
@@ -243,13 +246,14 @@
 
 				</h3>
 
-				<form action="{{ route('description.search') }}" method="get">
+				<form action="{{ route('description.search') }}" method="get" >
+				<!--<form action="{{ route('description.search') }}" method="get" data-parsley-validate>-->
 
-					<div class="candidate-searchbox py-5">
+					<div class="candidate-searchbox em_p">
 
 						<div class="d-md-flex justify-content-center">
 							<div class="input w-md-50 w-100">
-								<input type="text" name="search" class="form-control"
+								<input required="required" type="text" name="search" class="form-control"
 
 								placeholder="Enter Job Description Title">
 							</div>
@@ -396,76 +400,6 @@
 					</ol>
 
 				</div> -->
-
-			</div>
-
-		</div>
-
-	</div>
-
-</div>
-@elseif(Route::is('question.index'))
-
-<div class="home-top">
-
-	<div class="container">
-
-		<div class="row justify-content-center">
-
-			<div class="col-md-10">
-
-				<h3 class="top-title wow fadeInUp mb-3">
-
-					Questions
-
-				</h3>
-
-			  <div class="navbar-breadcrumb">
-
-					<ol class="breadcrumb">
-
-						<li class="breadcrumb-item"><a href="{{ route('employers.dashboard') }}">Home</a></li>
-
-						<li class="breadcrumb-item active" aria-current="page">Question</li>
-
-					</ol>
-
-				</div>
-
-			</div>
-
-		</div>
-
-	</div>
-
-</div>
-@elseif(Route::is('question.create'))
-
-<div class="home-top">
-
-	<div class="container">
-
-		<div class="row justify-content-center">
-
-			<div class="col-md-10">
-
-				<h3 class="top-title wow fadeInUp mb-3">
-
-					Create new question
-
-				</h3>
-
-			  <div class="navbar-breadcrumb">
-
-					<ol class="breadcrumb">
-
-						<li class="breadcrumb-item"><a href="{{ route('employers.dashboard') }}">Home</a></li>
-
-						<li class="breadcrumb-item active" aria-current="page">Create question</li>
-
-					</ol>
-
-				</div>
 
 			</div>
 
@@ -740,7 +674,7 @@
 
 @elseif(Route::is('jobs.show'))
 
-<div class="home-top">
+<div class="">
 
 </div>
 
@@ -767,7 +701,7 @@
 
 				<form action="{{ route('candidates.search') }}" method="get">
 
-					<div class="candidate-searchbox py-5">
+					<div class="candidate-searchbox em_p">
 
 						<div class="d-md-flex justify-content-center">
 							<div class="input">
@@ -860,10 +794,11 @@
 
 
 				<form action="{{ route('employers.search') }}" method="get">
-					<div class="candidate-searchbox py-5">
+				<!--<form action="{{ route('employers.search') }}" method="get" data-parsley-validate>-->
+					<div class="candidate-searchbox em_p">
 						<div class="d-md-flex justify-content-center">
 							<div class="input">
-								<input type="text" name="search" class="form-control company__input"
+								<input required="required" type="text" name="search" class="form-control company__input"
 
 								placeholder="Enter Job Title, Employer Name">
 							</div>
@@ -1072,10 +1007,13 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 
 <!-- -->
 
+@elseif(Route::is('candidates.change-password') || Route::is('candidates.password-change'))
+
+@elseif(Route::is('employers.change-password') || Route::is('employers.password-change'))
+
 @elseif(Route::is('password.request') || Route::is('password.reset'))
 
 <!-- -->
-
 
 
 @else
@@ -1102,7 +1040,11 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 					@elseif(Route::is('team.show'))
 
 					Team - {{ $user->name }}
+					
+					@elseif(Route::is('login'))
 
+					Login !
+					
 					@elseif(Route::is('candidates.show'))
 
 					Candidate Details
@@ -1149,7 +1091,9 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 
 					Terms and Service
 
+					@elseif(Route::is('login'))
 
+					Login
 
 					@elseif(Route::is('privacy'))
 
@@ -1172,10 +1116,10 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 				@if(Route::is('employers.search'))
 
 				<form action="{{ route('employers.search') }}" method="get">
-					<div class="candidate-searchbox py-5">
+					<div class="candidate-searchbox em_p">
 						<div class="d-md-flex justify-content-center">
 							<div class="input">
-								<input type="text" name="search" class="form-control company__input"
+								<input required="required" type="text" name="search" class="form-control company__input"
 
 								placeholder="Enter Job Title, Employer Name">
 							</div>
@@ -1198,7 +1142,7 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 
 				<form action="{{ route('candidates.search') }}" method="get">
 
-					<div class="candidate-searchbox py-5">
+					<div class="candidate-searchbox em_p">
 
 						<div class="d-md-flex justify-content-center">
 							<div class="input pb-2 pb-md-0">
@@ -1249,11 +1193,11 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 					<div class="d-flex">
 						<div class="job-searchbox">
 							<div class="input__search">
-								<input type="text" name="job" class="form-control" placeholder="Find Job: title, keywords">
+								<input type="text" name="job" class="form-control" placeholder="{{ request()->has('job') ? request()->get('job') : 'Find Job: title, keywords' }}">
 							</div>
 
 							<div class="input__city">
-								<input type="text" name="location" class="form-control" placeholder="Where: city">
+								<input type="text" name="location" class="form-control" placeholder="Location: {{ request()->has('location') ? request()->get('location') : 'Find Job: title, keywords' }}">
 							</div>
 							<div class="custom__search_bar">
 								<div class="input__submit">
@@ -1287,7 +1231,7 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 
 								<option data-icon="fa fa-star" value="all">All Experience</option>
 
-								@foreach (App\Models\Experience::orderBy('name', 'asc')->get() as $exp)
+								@foreach (App\Models\Experience::orderBy('sort', 'asc')->where('status',1)->get() as $exp)
 
 								<option value="{{ $exp->slug }}">{{ $exp->name }}</option>
 
@@ -1412,6 +1356,11 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 
 
 						<li class="breadcrumb-item active" aria-current="page">Terms and Service</li>
+
+						@elseif(Route::is('login'))
+
+
+						<li class="breadcrumb-item active" aria-current="page">Login</li>
 
 						@elseif(Route::is('privacy'))
 

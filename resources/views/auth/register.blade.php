@@ -449,7 +449,8 @@ $is_employer = true;
 
 
 
-                        <form action="{{ route('register.employee') }}" method="post" enctype="multipart/form-data"
+                        <!--<form action="{{ route('register.employee') }}" method="post" enctype="multipart/form-data"-->
+                        <form action="{{ route('register') }}" method="post" enctype="multipart/form-data"
                             data-parsley-validate>
 
                             @csrf
@@ -660,7 +661,7 @@ $is_employer = true;
                                     <input type="password" data-parsley-trigger="input" class="form-control"
                                         name="password_confirmation" id="employe_password_confirmation"
                                         placeholder="Write Password Again" minlength="8"
-                                        data-parsley-equalto="#passwordEm" required
+                                        data-parsley-equalto="#employe_passwordEm" required
                                         data-parsley-required-message="Please write your confirmation password">
 
                                 </div>

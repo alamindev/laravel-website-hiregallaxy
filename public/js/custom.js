@@ -280,3 +280,51 @@ $(".updatedjob").click(function(e) {
         }
     }
 });
+
+$('.brand-carousel').owlCarousel({
+  loop:true,
+  margin:10,
+  autoplay:true,
+  responsive:{
+    0:{
+      items:1
+    },
+    600:{
+      items:3
+    },
+    1000:{
+      items:5
+    }
+  }
+})
+
+$("#btnSave").click(function(e){
+
+    e.preventDefault();
+    var email = $("input[name=email]").val();
+    var token = $("input[name=_token]").val();
+    if(email){
+        $.ajax({
+    
+            type:'POST',
+            url:'/store-subscribe',
+            headers: {
+                'X-CSRF-Token': token 
+            },
+            data:{email:email},
+            success:function(data){
+                if(data=='"success"'){
+                    alert('Congratulations ! Subscribed Succesfully.')
+                }else if(data=='"error"'){
+                    alert('Whoops ! You are already Subscribed user.')
+                }else{
+                    alert('Sorry! Something is wgrong')
+                }
+            },
+
+        });
+    }else{
+        alert('Please Enter Email !');
+    }
+    
+});

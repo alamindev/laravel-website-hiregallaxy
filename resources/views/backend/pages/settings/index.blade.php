@@ -104,7 +104,7 @@ Settings | Joblrs
 
                             <input type="file" name="site_favicon" id="site_favicon" class="dropify"
 
-                                data-default-file="{{ asset('images/'.$settings->site_favicon) }}"
+                                data-default-file="{{ asset('public/images/'.$settings->site_favicon) }}"
 
                                 data-height="80"/>
 

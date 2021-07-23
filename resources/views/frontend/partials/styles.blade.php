@@ -1,7 +1,7 @@
 <!-- Google Font -->
 <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
 
-<link rel="shortcut icon" href="{{ asset('images/'.App\Models\Setting::first()->site_favicon) }}"
+<link rel="shortcut icon" href="{{ asset('public/images/'.App\Models\Setting::first()->site_favicon) }}"
 
     type="image/x-icon">
 

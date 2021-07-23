@@ -1,0 +1,195 @@
+/** Header */
+
+
+
+
+
+/* footer.sticky-footer {
+
+    padding: 2rem 0;
+
+    -ms-flex-negative: 0;
+
+    flex-shrink: 0;
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    display: block;
+
+    right: 0;
+
+} */
+
+
+
+.mt-10 {
+
+    margin-top: 200px;
+
+}
+
+
+
+.text-xs {
+
+    font-size: .9rem;
+
+}
+
+
+
+label {
+
+    font-weight: 500;
+
+}
+
+
+
+.sidebar .sidebar-brand .sidebar-brand-text {
+
+    color: white;
+
+}
+
+
+
+.sidebar .sidebar-brand .sidebar-brand-icon i {
+
+    color: #fff;
+
+}
+
+
+
+.bg-gradient-primary {
+
+    background-color: #263238!important;
+
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #263238), to(#263238b8));
+
+    background-image: linear-gradient(180deg, #263238 10%, #263238b8 100%);
+
+}
+
+
+
+.admin-navbar {
+
+    background: #263238!important;
+
+}
+
+
+
+.nav-item.show {
+
+    background: #104e82;
+
+}
+
+
+
+
+
+/** Pages */
+
+
+
+.breadcrumb {
+
+    background-color: transparent;
+
+}
+
+
+
+.table,
+
+body,
+
+p,
+
+div {
+
+    color: #242a2d;
+
+}
+
+
+
+.noty_theme__sunset.noty_bar .noty_body {
+
+    padding: 10px;
+
+    font-size: 20px;
+
+    text-shadow: 0px;
+
+    color: #fff;
+
+}
+
+
+
+.pointer {
+
+    cursor: pointer;
+
+}
+#alertsDropdown {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.custom__sidebar_show{
+    display: none;
+}
+@media (max-width: 600px) {
+    .common__title{
+        font-size: 18px;
+    }
+    .view__site{
+        display: none;
+    }
+    .breadcrumb-holder.float-right{
+        float: none !important;
+    }
+}
+@media (max-width: 440px) {
+    .breadcrumb-item {
+        font-size: 12px;
+    }
+    .common__title {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1100px) {
+  .navbar-nav .nav-link{
+      font-size: 14px !important;
+  }
+}
+@media (max-width: 991px) {
+  .navbar__custom li{
+      display: none;
+  }
+  .custom__sidebar_show{
+        display: block;
+    }
+}
+@media (max-width: 768px) { 
+  .custom__sidebar_show{
+        display: none;
+    }
+  .custom__sidebar_show.toggled{
+        display: block;
+        width: 130px !important;
+        overflow: visible !important;
+    }
+}
+

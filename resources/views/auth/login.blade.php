@@ -1,53 +1,16 @@
-<html>
+@extends('frontend.layouts.master')
 
-<head>
+@section('title')
 
-    <title>
+Jobs | Login
 
-        Login | Joblrs
-
-    </title>
-
-    @include('frontend.partials.styles')
-
-</head>
-
-<body>
-
-    <!-- Header -->
-
-    <div class="header-main">
+@endsection
 
 
+@section('content')
 
-        <!-- Top Header -->
-
-        @include('frontend.partials.top-header')
-
-        <!-- Top Header -->
-
-
-
-        <!-- Navbar -->
-
-        @include('frontend.partials.nav')
-
-        <!-- Navbar -->
-
-
-
-    </div>
-
-    <!-- Header -->
-
-    @include('frontend.partials.messages')
+    <!--@include('frontend.partials.messages')-->
 
     @include('frontend.partials.signin-modal')
 
-</body>
-
-
-
-@include('frontend.partials.scripts')
-
-</html>
+@endsection

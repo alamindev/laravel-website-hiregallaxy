@@ -3,14 +3,14 @@
 		<div class="d-flex">
 			<div class="job-searchbox">  
 				<div class="input__search">
-					<input type="text" name="job" class="form-control" placeholder="Find Job: title, keywords">
+					<input type="text" name="job" class="form-control" placeholder="Find Job: title, keyword" value="{{ request()->has('job') ? request()->get('job') : '' }}">
 				</div>
 
 				<div class="input__city">
-					<input type="text" name="location" class="form-control" placeholder="Where: city">
+					<input type="text" name="location" class="form-control" placeholder="Location:{{ request()->has('location') ? request()->get('location') : 'all' }} ">
 				</div> 
 				<div class="custom__search_bar">
-					<div class="dropdown">
+					<div class="dropdown" style="display:none;">
 						<button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" data-id="jobs" href="javascript:void(0)">Jobs</a> 
@@ -50,7 +50,7 @@
 	
 					<option data-icon="fa fa-star" value="all">All Experience</option>
 	
-					@foreach (App\Models\Experience::orderBy('name', 'asc')->get() as $exp)
+					@foreach (App\Models\Experience::orderBy('sort', 'asc')->where('status',1)->get() as $exp)
 	
 					<option value="{{ $exp->slug }}">{{ $exp->name }}</option>
 	
@@ -88,7 +88,7 @@
 	
 					<option data-icon="fa fa-star" value="all">All Experience</option>
 	
-					@foreach (App\Models\Experience::orderBy('name', 'asc')->get() as $exp)
+					@foreach (App\Models\Experience::orderBy('sort', 'asc')->where('status',1)->get() as $exp)
 	
 					<option value="{{ $exp->slug }}">{{ $exp->name }}</option>
 	

@@ -404,9 +404,9 @@ Employer Dashboard | {{ App\Models\Setting::first()->site_title }}
 
 							<div class="single-dashboard-link card card-default p-3 text-center"
 
-								onclick="location.href='{{ route('question.index') }}'">
-                                <i class="fa fa-file font30"></i>
-								<h6>Create test</h6>
+								onclick="location.href='{{ route('employers.change-password') }}'">
+								<i class="fa fa-edit font30"></i>
+								<h6>Change password</h6>
 							</div>
 
 						</div>

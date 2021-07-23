@@ -164,7 +164,7 @@ class JobsController extends Controller
 
     private function jobsearchs($request)
     {
-        $search = $category = $country = $country_id = $category_id = null;
+        $search = $category = $country = $city = $country_id = $category_id = null;
 
         $salary_min = 0;
 
@@ -371,7 +371,7 @@ class JobsController extends Controller
 
         $pageNoText = $paginateNumber * $pageNo . ' to ' . ($pageNo * $paginateNumber + $total_jobs);
 
-        return view('frontend.pages.jobs.index', compact('jobs', 'categories', 'pageNoText', 'search', 'country', 'category'));
+        return view('frontend.pages.jobs.index', compact('jobs', 'categories', 'pageNoText', 'search', 'country', 'category', 'city'));
 
     }
     public function JobDescriptionSearch($request)

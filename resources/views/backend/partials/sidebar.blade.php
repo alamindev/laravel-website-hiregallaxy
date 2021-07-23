@@ -69,6 +69,11 @@ class="nav-item dropdown no-arrow {{ (
 
         <h6 class="collapse-header">Jobs Options</h6>
 
+
+        <a class="dropdown-item" href="{{ route('admin.sponsor.index') }}">Sponsors</a>
+
+        <a class="dropdown-item" href="{{ route('admin.subscriber.index') }}">Subscribers</a>
+
         <a class="dropdown-item" href="{{ route('admin.category.index') }}">Positions</a>
 
         <a class="dropdown-item" href="{{ route('admin.states.index') }}">States</a>

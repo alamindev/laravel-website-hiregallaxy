@@ -58,6 +58,39 @@ class SubscriberController extends Controller
 
     }
 
+
+    public function store2(Request $request)
+    {
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+
+            $subscriber = Subscriber::where('email', $request->email)->first();
+
+            if (is_null($subscriber)) {
+
+                $subscriber = new Subscriber();
+
+                $subscriber->email = $request->email;
+
+                $subscriber->status = 1;
+
+                if ($subscriber->save()) {
+
+                    $dataResponse = 'success';
+
+                }
+
+            } else {
+
+                $dataResponse = 'error';
+
+            }
+
+        }
+        
+        return json_encode($dataResponse);
+
+    }
+
     /**
 
      * unsubscribe

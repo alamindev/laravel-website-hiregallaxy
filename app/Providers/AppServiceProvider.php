@@ -75,6 +75,14 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
+        View::composer('*',function($view){
+
+            $sponsors = DB::table('sponsors')->get();
+            $view->with('sponsors',$sponsors);
+
+        });
+
+
     }
 
 }

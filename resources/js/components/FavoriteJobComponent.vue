@@ -4,7 +4,7 @@
         <a @click="addToFavorite()" class="btn btn-outline-gray favorite-btn ml-2" v-if="!isFavorite" title='Click to add this to favorite list'>
             <i class="fa fa-heart-o"></i>
         </a>
-        <a @click="addToFavorite()" class="btn btn-outline-gray favorite-btn" v-else title='Click to remove this from favorite list' style="color: red;">
+        <a @click="addToFavorite()" class="btn btn-outline-gray favorite-btn" v-else title='Click to remove this from favorite list' style="color: white !important;background: red !important;">
             <i class="fa fa-heart-o"></i>
         </a>
     </span>

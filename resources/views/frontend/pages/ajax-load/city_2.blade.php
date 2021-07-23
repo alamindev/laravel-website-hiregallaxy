@@ -15,11 +15,12 @@
 
         <option value="{{ $countrySingle->name }}"
 
-            {{ isset($_GET['cities']) && ($_GET['cities'] == $countrySingle->name) ? 'selected' : '' }}>
+            {{ isset($urlName) && ($urlName == $countrySingle->name) ? 'selected' : '' }}>
 
-            &nbsp;&nbsp; {{ $countrySingle->name }}
+			&nbsp;&nbsp; {{ $countrySingle->name }}
 
-             
+			({{ count(App\Models\Job::where('status_id', 1)->where('country_id', $countrySingle->id)->get()) }})
+			
         </option>
 
         @endforeach

@@ -19,6 +19,7 @@ class CreateExperiencesTable extends Migration
             $table->string('slug')->unique();
             $table->string('description')->nullable();
             $table->boolean('status')->default(1)->comment('1=>active, 0=>inactive');
+            $table->integer('sort')->default(100)->nullable();
             $table->timestamps();
         });
     }

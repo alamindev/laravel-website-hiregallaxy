@@ -1,0 +1,131 @@
+.employer-detail-main {
+    margin: 0px;
+}
+
+.single-dashboard-link {
+    padding: 10px 5px !important;
+    height: 100%;
+}
+
+.single-dashboard-link p {
+    font-size: 14px;
+}
+
+#pending_div label {
+    color: #736f6f;
+    display: flex !important;
+    align-items: center;
+    margin: 0;
+}
+
+#pending_div label input {
+    margin-right: 5px;
+}
+
+#completed_div label {
+    color: #736f6f;
+    display: flex !important;
+    align-items: center;
+    margin: 0;
+}
+
+#completed_div label input {
+    margin-right: 5px;
+}
+
+#pending_div .form-group {
+    display: flex;
+    justify-content: space-between;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#completed_div .form-group {
+    display: flex;
+    justify-content: space-between;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.createTodoBtn {
+    cursor: pointer;
+}
+
+.employer-page .row {
+    margin-right: -15px;
+}
+
+.teams__all .username {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.teams__all .email {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.teams__all .action {
+    margin-top: 10px;
+}
+
+.header-company-profile img {
+    width: 130px;
+}
+
+@media (max-width: 600px) {
+    .employer-page .col-sm-6.px-1 {
+        padding: 0px 15px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .header-company-profile img {
+        height: 96px;
+        width: 96px;
+    }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    margin-right: 5px;
+    padding: 10px 15px 10px 15px;
+}
+
+.top-authentication-links {
+    display: flex;
+    align-items: center;
+}
+
+#navbarResponsive {
+    align-items: center;
+}
+
+.message__hidden {
+    display: inline-block;
+}
+
+.hidden_sm_job_text {
+    display: inline-block;
+}
+
+@media (max-width: 1191px) {
+    .message__hidden {
+        display: none;
+    }
+    .hidden_sm_job_text {
+        display: none;
+    }
+}
+
+.account-img {
+    max-width: 30px;
+    height: 30px;
+    width: 30px;
+}

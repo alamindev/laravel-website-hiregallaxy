@@ -9,7 +9,7 @@ Personality Test| {{ App\Models\Setting::first()->site_title }}
 
 @section('content')
 
-<section class="employer-page sec-pad pt-0" id="hiregalaxy">
+<section class="employer-page sec-pad pt-0 personality" id="hiregalaxy">
 	<div class="container">
         <div class="row">
             <div class="col-lg-12">

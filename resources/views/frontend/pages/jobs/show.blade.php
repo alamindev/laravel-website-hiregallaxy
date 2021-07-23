@@ -1,28 +1,44 @@
 @extends('frontend.layouts.master')
 
-
-
 @section('title')
 
 {{ $job->title }} - Job Details | {{ App\Models\Setting::first()->site_title }}
 
 @endsection
 
-
-
-
-
 @section('stylesheets')
+<style>
 
-
-
+    .my_img{
+        width: 100% !important;height: auto !important;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .my_img{
+            width: auto !important;
+            height: 120px !important;
+        }
+        .pt-5{
+            padding-top:10px !important;
+        }
+        .social_share {
+            margin-left: -30px !important;
+        }
+    }
+    
+</style>
 @endsection
 
 
-
-
-
 @section('content')
+
+<?php
+
+    $title=urlencode($job->title);
+    $url=urlencode(url()->full());
+    $image=urlencode('https://joblrs.com/images/1602044476.png');
+    
+?>
 
 <section class="employer-page job-detail-page">
 
@@ -36,19 +52,20 @@
 
 					<div class="row">
 
-						<div class="col-sm-2 text-center mb-4 pt-5 pt-md-0">
+						<div class="col-sm-3 text-center mb-4 pt-5 pt-md-0">
 
 							<img src="{{ App\Helpers\ReturnPathHelper::getUserImage( $job->user->id) }}"
 
-								class="img img-fluid" class="img img-fluid">
+								class="img img-fluid my_img" class="img img-fluid">
 
 						</div>
 
-						<div class="col-sm-8">
+						<div class="col-sm-7">
 
 							<div class="pl-0 pl-md-5">
 
 								<div class="single-job-description">
+
 
 									<h3>{{ $job->title }}</h3>
 
@@ -186,17 +203,25 @@
 
 									<div class="mt-3">
 
-										<div class="footer-social">
+										<div class="footer-social social_share">
 
-											<span class="mr-3">Share </span>
+											<span class="">Share </span>
 
-											<a href=""><i class="fa fa-facebook facebook-icon"></i></a>
+                                            <a onClick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo $title;?>&amp;p[url]=<?php echo $url; ?>&amp;&p[images][0]=<?php echo $image;?>', 'sharer', 'toolbar=0,status=0,width=548,height=325');" target="_parent" href="javascript: void(0)">
+                                                <i style="color:#3d5fa1 !important" class="fa fa-facebook facebook-icon"></i>
+                                            </a>
 
-											<a href=""><i class="fa fa-twitter twitter-icon"></i></a>
 
-											<a href=""><i class="fa fa-google-plus google-plus-icon"></i></a>
 
-											<a href=""><i class="fa fa-linkedin linkedin-icon"></i></a>
+											<a href="javascript:void();"  onClick="shareOntwitter()"><i style="color:#389ba8 !important;" class="fa fa-twitter twitter-icon"></i></a>
+
+											<a href="javascript:void();"  onClick="shareOnGoogle()"><i style="color:#c2423a !important;" class="fa fa-google-plus google-plus-icon"></i></a>
+
+											<a href="javascript:void();"  onClick="shareOnLinkedIn()"><i style="color:#095484 !important;" class="fa fa-linkedin linkedin-icon"></i></a>
+
+
+                                            <a href="whatsapp://send?text=<?php echo $url; ?>" data-action="share/whatsapp/share"><i style="color:#25d366 !important;" class="fa fa-whatsapp whatsapp-icon"></i></a>
+
 
 										</div>
 
@@ -763,6 +788,34 @@
 
 
 @section('scripts')
+
+<script>
+    
+function shareOntwitter(){
+    var url = 'https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>';
+    TwitterWindow = window.open(url, 'TwitterWindow',width=600,height=300);
+    return false;
+ }
+    
+function shareOnGoogle(){
+     var url = "https://plus.google.com/share?url=<?php echo $url; ?>";
+     window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');
+     return false;
+}
+
+    
+function shareOnLinkedIn(){
+    
+    var url = "https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url; ?>";
+    var left = (screen.width -570) / 2;
+    var top = (screen.height -570) / 2;
+    var params = "menubar=no,toolbar=no,status=no,width=570,height=570,top=" + top + ",left=" + left;  window.open(url,"NewWindow",params);
+     return false;
+}
+
+</script>
+
+
 
 <script>
 	$.urlParam = function (name) {

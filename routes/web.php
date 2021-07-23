@@ -32,7 +32,13 @@
 
  */
 
-
+Route::get('/clear', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('view:clear');
+    $exitCode = Artisan::call('config:cache');
+    $exitCode = Artisan::call('config:clear');
+    echo 'Done';
+});
 
 Route::post('ajax', 'Frontend\AjaxController@main')->name('ajax');
 
@@ -51,16 +57,6 @@ Route::get('testimonials', 'HomeController@Testimonial')->name('testimonial');
 /*** Employers **/
 
 Route::group(['prefix' => 'employers'], function () {
-
-    Route::post('question/{id}', 'Frontend\QuestionController@update')->name('que.update');
-    Route::get('delete_question/{question_id}', 'Frontend\QuestionController@delete_question')->name('question.delete_question');
-    Route::post('/questions/uploads', "Frontend\QuestionController@upload");
-    Route::get('question/file_browser', "Frontend\QuestionController@fileBrowser");
-    Route::get('question/view/{id}', 'Frontend\QuestionController@show')->name('question.show');
-    Route::resource('question', 'Frontend\QuestionController');
-
-
-
     Route::get('/search', 'Frontend\EmployersController@search')->name('employers.search');
     Route::get('', 'Frontend\EmployersController@index')->name('employers');
     Route::get('/view/{username}', 'Frontend\EmployersController@show')->name('employers.show');
@@ -83,6 +79,12 @@ Route::group(['prefix' => 'employers'], function () {
         Route::post('/applicants/update/{id}', 'Frontend\EmployersController@applicantUpdate')->name('employers.applicants.update');
 
         Route::get('/dashboard', 'Frontend\EmployersController@dashboard')->name('employers.dashboard');
+
+        // Change password
+        
+        Route::post('/employer-password-change', 'Frontend\EmployersController@passwordChangeUpdate')->name('employers.password-change');
+        Route::get('/employer-change-password', 'Frontend\EmployersController@changePassword')->name('employers.change-password');
+        
 
         Route::get('/applicants', 'Frontend\EmployersController@applicants')->name('employers.applicants');
 
@@ -156,6 +158,13 @@ Route::group(['prefix' => 'candidates'], function () {
     Route::get('/search', 'Frontend\CandidatesController@search')->name('candidates.search');
 
     Route::group(['middleware' => ['checkCandidate']], function () {
+        
+        // Change password
+        
+        Route::post('/password-change', 'Frontend\CandidatesController@passwordChangeUpdate')->name('candidates.password-change');
+        
+        Route::get('/change-password', 'Frontend\CandidatesController@changePassword')->name('candidates.change-password');
+        
         // Experience
 
         Route::post('/add-experience', 'Frontend\ExperiencesController@store')->name('candidates.experience.store');
@@ -235,6 +244,7 @@ Route::group(['prefix' => 'candidates'], function () {
         Route::get('/favorite-jobs', 'Frontend\CandidatesController@favoriteJobs')->name('candidates.jobs.favorite');
 
         Route::get('/applied-jobs', 'Frontend\CandidatesController@appliedJobs')->name('candidates.jobs.applied');
+        
     });
 
 });
@@ -319,11 +329,10 @@ Route::group(['prefix' => 'users'], function () {
 
 });
 
-
-
 /** Subscription Routes **/
 
 Route::post('/get-subscribed', 'Frontend\SubscriberController@store')->name('users.subscribe');
+Route::post('/store-subscribe', 'Frontend\SubscriberController@store2')->name('users.subscribe2');
 
 Route::get('/unsubscribe/{email}', 'Frontend\SubscriberController@unsubscribe')->name('users.unsubscribe');
 
@@ -455,6 +464,43 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/delete/{id}', 'Backend\CategoryController@destroy')->name('category.delete')->middleware('role:super-admin,admin');
 
         Route::post('/active/{id}', 'Backend\CategoryController@active')->name('category.active')->middleware('role:super-admin,admin');
+
+    });
+    
+    
+    /**
+
+     * Sponsor Routes
+
+     */
+
+    Route::group(['prefix' => 'sponsors'], function () {
+
+        Route::get('/', 'Backend\SponsorController@index')->name('sponsor.index')->middleware('role:super-admin,admin');
+
+        Route::get('/trash', 'Backend\SponsorController@trash')->name('sponsor.trash')->middleware('role:super-admin,admin');
+
+        Route::post('/add', 'Backend\SponsorController@store')->name('sponsor.submit')->middleware('role:super-admin,admin');
+
+        Route::post('/edit/{id}', 'Backend\SponsorController@update')->name('sponsor.update')->middleware('role:super-admin,admin');
+
+        Route::post('/delete/{id}', 'Backend\SponsorController@destroy')->name('sponsor.delete')->middleware('role:super-admin,admin');
+
+
+    });
+    
+    
+    /**
+
+     * Subscriber
+
+     */
+    Route::group(['prefix' => 'subscriber'], function () {
+
+        Route::get('/', 'Backend\SubscriberController@index')->name('subscriber.index')->middleware('role:super-admin,admin');
+
+        Route::post('/delete/{id}', 'Backend\SubscriberController@destroy')->name('subscriber.delete')->middleware('role:super-admin,admin');
+
 
     });
 

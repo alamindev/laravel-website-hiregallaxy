@@ -10,6 +10,25 @@
 <!-- Popular Positions Area -->
  
  
+@if(count($sponsors) > 0)
+<!-- Footer Section -->
+<section class="em_partnar_bg">
+    <h2 class="text-center">Our Partnars</h2>
+    
+    <div class="brand-carousel section-padding owl-carousel">
+        
+    @foreach($sponsors as $sponsor)
+          <div class="single-logo">
+              <a href="{{$sponsor->link}}" target="_blank">
+                  <img src="{!! asset('images/sponsors/'.$sponsor->image) !!}" alt="{{$sponsor->name}}" class="cus_owl_img">
+              </a>
+          </div>
+    @endforeach
+
+    </div>
+</section>
+<!-- Footer Section -->
+@endif
 
 <section class="trending_job_cetegory" >
 	<div class="container">
@@ -22,7 +41,7 @@
 				</ul>
 			</div> 
 		</div> 
-		<div class="row custom--section-main ">
+		<div class="row custom--section-main pd-t-40">
 			<div class="col-lg-6  wow fadeInUp">
 				 <img class="img-fluid" src="{{ asset('images/new-img/candidate.png') }}" alt="candidate">
 			</div> 
@@ -59,7 +78,7 @@
 						<div class="col-lg-6  ">
 							<div class="common-div">
 								<img src="{{ asset('/images/new-img/aptitude.png') }}" alt="aptitude">
-								<h2>Personality</h2>
+								<h2>Aptitude</h2>
 								<p>Take online aptitude test for free. When you apply for a job , the details will be shared to recruiters for free!!</p>
 							</div>
 						</div>
@@ -69,50 +88,87 @@
 	</div> 
 </section>
  
-	<section class="bg-white">
-		<div class="container">
-		 	<div class="row custom--section-main  wow fadeInUp">
-				<div class="col-lg-6 ">
-					<img class="img-fluid" src="{{ asset('images/new-img/employer.png') }}" alt="employer">
-				</div> 
-				<div class="col-lg-6 ">
-					<div class="custom--new-section">
-						<img src="{{ asset('images/new-img/people-two.png') }}" alt="people two">
-						<h2>Employer</h2>
-						<h3>The problem of screening hundreds of 
+<section class="bg-white em_pb_50">
+	<div class="container">
+	 	<div class="row custom--section-main  wow fadeInUp">
+			<div class="col-lg-6 ">
+				<img class="img-fluid" src="{{ asset('images/new-img/employer.png') }}" alt="employer">
+			</div> 
+			<div class="col-lg-6 ">
+				<div class="custom--new-section">
+					<img src="{{ asset('images/new-img/people-two.png') }}" alt="people two">
+					<h2>Employer</h2>
+					<h3>The problem of screening hundreds of 
 candidates is solved</h3>
-						<p>Received PRESCREENED candidate to your ATS dashboard. Our simple process of screening candidate is very effective. Joblrs automatic candidate screening process perform following tests online and provide employer with top candidate.</p>
-						<div class="custom--list">
-							<span>1. Aptitude test</span>
-							<span>2. Personality test</span>
-							<span>3. Job skill test</span>
-						</div>
+					<p>Received PRESCREENED candidate to your ATS dashboard. Our simple process of screening candidate is very effective. Joblrs automatic candidate screening process perform following tests online and provide employer with top candidate.</p>
+					<div class="custom--list">
+						<span>1. Aptitude test</span>
+						<span>2. Personality test</span>
+						<span>3. Job skill test</span>
 					</div>
-				</div> 
-		</div> 
-	</div>
+				</div>
+			</div> 
+	</div> 
+</div>
 </section>
-	<section class="bg-white py-5">
-		<div class="container">
-		 	<div class="row custom--section-main  wow fadeInUp">
-				<div class="col-lg-6">
-					<img class="img-fluid" src="{{ asset('images/new-img/recruiter.png') }}" alt="recruiter">
-				</div> 
-				<div class="col-lg-6">
-					<div class="custom--new-section">
-						<img src="{{ asset('images/new-img/list.png') }}" alt="list">
-						<h2>Recruiter</h2>
-						<h3>The problem of managing multiple recruitment 
+
+<section class="bg-white py-5 em_bg_home">
+	<div class="container">
+	 	<div class="row custom--section-main  wow fadeInUp">
+			<div class="col-lg-6">
+				<img class="img-fluid" src="{{ asset('images/new-img/recruiter.png') }}" alt="recruiter">
+			</div> 
+			<div class="col-lg-6">
+				<div class="custom--new-section">
+				    <!--<br><br>-->
+					<img src="{{ asset('images/new-img/list.png') }}" alt="list">
+					<h2>Recruiter</h2>
+					<h3>The problem of managing multiple recruitment 
 team at different location is no more a point of 
 worry for recruitment agency</h3>
-						<p>In Joblrs platform recruiter can add multiple team and monitor their performance.</p>
-						
-					</div>
-					<img  class="img-fluid" src="{{ asset('images/new-img/chart.png') }}" alt="chart">
-				</div> 
-		</div> 
-	</div>
+					<p>In Joblrs platform recruiter can add multiple team and monitor their performance.</p>
+					
+				</div>
+			</div> 
+	</div> 
+</div>
 </section>
+
+<section class="em_bg_sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <img class="img-fluid em_img" src="{{ asset('images/new-img/chart.png') }}" alt="chart">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="subscribe">
+  <div class="container">
+    <div class="section-header">
+      <h2>Newsletter</h2>
+      <p>Subscribe by your Email to get notification first from Joblrs.</p>
+    </div>
+
+    <form>
+      <div class="form-row justify-content-center">
+        <div class="col-auto">
+                
+          @csrf
+          <input id="email" type="email" name="email" class="form-control" placeholder="Enter your Email" required="required">
+          
+        </div>
+        <div class="col-auto">
+          <button id="btnSave">Subscribe</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>
+
 <section class="bg-white py-5 question--answer-area">
 		<div class="container">
 		 	<div class="row wow fadeInUp">

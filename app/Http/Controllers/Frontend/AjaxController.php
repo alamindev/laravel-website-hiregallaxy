@@ -404,9 +404,9 @@ class AjaxController extends Controller
                 $states = State::with(['cities' => function ($q) use ($country) {
                     $q->where('city_id', $country->id);
                 }])->orderBy('name', 'asc')->get();
-
-                $html = view('frontend.pages.ajax-load.city_2', compact('states'))->render();
-                return response()->json(['status' => 'success', 'html' => $html]);
+                $urlName = $this->request->cityName;
+                $html = view('frontend.pages.ajax-load.city_2', compact('states','urlName'))->render();
+                return response()->json(['status' => 'success', 'urlName' => $urlName, 'html' => $html]);
             }
 
         } else {

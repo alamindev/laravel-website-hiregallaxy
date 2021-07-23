@@ -1,6 +1,6 @@
 <div class="employer-detail-sidebar">
 
-	<img alt="image" src="{{ App\Helpers\ReturnPathHelper::getUserImage($user->id) }}" class="img img-fluid">
+	<div style="width:100%;text-align:center;"><img alt="image" src="{{ App\Helpers\ReturnPathHelper::getUserImage($user->id) }}" class="img" style="height:150px;"></div>
 
 	<div class="single-job-description mt-2">
 
@@ -45,6 +45,12 @@
 			</a>
 
 
+
+			<a href="{{ route('candidates.change-password') }}" class="list-group-item list-group-item-action">
+
+				<i class="fa fa-edit"></i> Change Password
+
+			</a>
 
 			<a href="{{ route('candidates.show', $user->username) }}" class="list-group-item list-group-item-action">
 

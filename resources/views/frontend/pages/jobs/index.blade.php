@@ -70,11 +70,24 @@ Jobs | {{ App\Models\Setting::first()->site_title }}
 
 				@if (isset($_GET['country']) && $_GET['country'] != '')
 
-				City -
+				Country -
 
 				<span class="badge badge-primary font16">
 
 					{{ $_GET['country'] }}
+
+				</span>
+
+				@endif
+
+
+				@if (isset($_GET['cities']) && $_GET['cities'] != '')
+
+				City -
+
+				<span class="badge badge-primary font16">
+
+					{{ $_GET['cities'] }}
 
 				</span>
 

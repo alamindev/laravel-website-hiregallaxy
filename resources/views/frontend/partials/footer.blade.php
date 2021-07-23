@@ -1,6 +1,4 @@
-<!-- Footer Section -->
-
- <section class="footer-section sec-pad">
+<section class="footer-section sec-pad">
 
 	<div class="container">
 

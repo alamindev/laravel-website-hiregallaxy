@@ -97,6 +97,10 @@
 
       <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="jobs_settings" style="width: 12rem !important">
 
+        <a class="dropdown-item" href="{{ route('admin.sponsor.index') }}">Sponsors</a>
+
+        <a class="dropdown-item" href="{{ route('admin.subscriber.index') }}">Subscribers</a>
+        
         <a class="dropdown-item" href="{{ route('admin.category.index') }}">Positions</a>
 
         <a class="dropdown-item" href="{{ route('admin.states.index') }}">States</a>
@@ -499,7 +503,7 @@
 
       <div class="modal-body">
 
-        <form class="" action="{{ route('admin.password.change') }}" method="post">
+        <form class="" action="{{ route('admin.password.change') }}" method="post" data-parsley-validate>
 
           @csrf
 
@@ -508,6 +512,12 @@
           <input type="email" name="email" id="email" placeholder="New Email" class="form-control"
 
             value="{{ Auth::guard('admin')->user()->email }}" required />
+            
+          <input hidden="hidden" type="hidden" name="user_id" id="user_id" class="form-control"
+
+            value="{{ Auth::guard('admin')->user()->id }}" required />
+            
+            
 
           <br>
 
@@ -519,17 +529,13 @@
 
             <div class="col-md-6">
 
-              <input type="password" name="password" id="password" placeholder="New Password" class="form-control"
-
-                required />
+              <input type="password" name="password" id="password" placeholder="New Password" class="form-control" minlength="8" required />
 
             </div>
 
             <div class="col-md-6">
 
-              <input type="password" name="password_confirmation" id="password_confirmation"
-
-                placeholder="Confirm New Password" class="form-control" required />
+              <input type="password" name="password_confirmation"data-parsley-equalto="#password" id="password_confirmation" placeholder="Confirm New Password" class="form-control"  minlength="8" required />
 
             </div>
 
