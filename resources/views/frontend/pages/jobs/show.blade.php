@@ -12,7 +12,7 @@
     .my_img{
         width: 100% !important;height: auto !important;
     }
-    
+
     @media only screen and (max-width: 600px) {
         .my_img{
             width: auto !important;
@@ -25,7 +25,7 @@
             margin-left: -30px !important;
         }
     }
-    
+
 </style>
 @endsection
 
@@ -37,7 +37,7 @@
     $title=urlencode($job->title);
     $url=urlencode(url()->full());
     $image=urlencode('https://joblrs.com/images/1602044476.png');
-    
+
 ?>
 
 <section class="employer-page job-detail-page">
@@ -252,30 +252,12 @@
 
 												@if (Auth::id() != $job->user_id)
 
-												@if($result || !count($job->skills) > 0)
-
 														<a href="#apply-job-modal" data-toggle="modal" class="btn apply-now-button m-0  mb-2 mr-3 applyJobData"
 
 														data-job-id="{{ $job->id }}" data-currency="{{ $job->getCurrencyName() }}" data-company-id="{{ $job->user->id }}" data-monthly-salary="{{$job->monthly_salary}}">
-
 															Apply Now
-
 														</a>
-
-													@else
-
-														<a href="{{route('exam', $job->id)}}" class="btn apply-now-button m-0  mb-2  mr-3" >
-
-															Apply Now
-
-														</a>
-
-													@endif
-
-												@endif
-
-
-
+											    @endif
 											@endif
 
 										@else
@@ -496,10 +478,12 @@
 						<h5>Skills</h5>
 
 						<div>
+                            @php
+                            $skills = explode(',', $job->skills);
+                            @endphp
+							@foreach($skills as $skill)
 
-							@foreach($job->skills as $skill)
-
-								<div class="badge badge-info">{{$skill->name}}</div>
+								<div class="badge badge-info">{{$skill}}</div>
 
 							@endforeach
 
@@ -790,22 +774,22 @@
 @section('scripts')
 
 <script>
-    
+
 function shareOntwitter(){
     var url = 'https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>';
     TwitterWindow = window.open(url, 'TwitterWindow',width=600,height=300);
     return false;
  }
-    
+
 function shareOnGoogle(){
      var url = "https://plus.google.com/share?url=<?php echo $url; ?>";
      window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');
      return false;
 }
 
-    
+
 function shareOnLinkedIn(){
-    
+
     var url = "https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url; ?>";
     var left = (screen.width -570) / 2;
     var top = (screen.height -570) / 2;

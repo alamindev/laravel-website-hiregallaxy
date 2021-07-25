@@ -144,12 +144,12 @@
             				<div class="input__search">
             					<input type="text" name="job" class="form-control" placeholder="Find Job: title, keyword" value="{{ request()->has('job') ? request()->get('job') : '' }}">
             				</div>
-            
+
             				<div class="input__city">
             					<input type="text" name="location" class="form-control" placeholder="Location:{{ request()->has('location') ? request()->get('location') : 'all' }} " value="Location:{{ request()->has('location') ? request()->get('location') : 'all' }} ">
-            				</div> 
-							
-							
+            				</div>
+
+
 							<div class="custom__search_bar">
 								<div class="input__submit">
 									<button type="submit"><i class="fa fa-search"></i></button>
@@ -1003,7 +1003,7 @@
  Route::is('team.jobs.posted') ||
 Route::is('employers.search.candidates') || Route::is('team.search.candidates') || Route::is('candidates.jobs.favorite') || Route::is('employers.messages') || Route::is('messages') || Route::is('message') || Route::is('team.messages') ||
 
-Route::is('candidates.messages') || Route::is('employers.jobs.applications') || Route::is('team.jobs.applications') ||Route::is('candidates.jobs.applied'))
+Route::is('candidates.messages') || Route::is('employers.jobs.applications') || Route::is('team.jobs.applications') || Route::is('candidates.jobs.applied') || Route::is('question.index')|| Route::is('question.create')|| Route::is('question.edit')  || Route::is('question.show') )
 
 <!-- -->
 
@@ -1040,11 +1040,11 @@ Route::is('candidates.messages') || Route::is('employers.jobs.applications') || 
 					@elseif(Route::is('team.show'))
 
 					Team - {{ $user->name }}
-					
+
 					@elseif(Route::is('login'))
 
 					Login !
-					
+
 					@elseif(Route::is('candidates.show'))
 
 					Candidate Details

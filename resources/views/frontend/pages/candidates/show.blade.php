@@ -2756,15 +2756,7 @@ minlength="5"
 
 											<div class="row form-group">
 
-												<div class="col-md-6">
 
-													<label for="cv">Curriculam Vitae (CV) <span
-
-															class="text-info font12">optional</span></label>
-
-													<input type="file" name="cv" id="cv" class="form-control" style="padding-bottom: 35px;" />
-
-												</div>
                                                 @if($user->candidate)
 												<div class="col-md-6">
 

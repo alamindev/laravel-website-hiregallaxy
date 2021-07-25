@@ -111,10 +111,10 @@ class CandidatesController extends Controller
             $arr[] = $skill['percentage'];
         }
 
- 
+
 
         return view('frontend.pages.candidates.print-test', compact('label', 'data','arr'));
-        
+
         // $pdf = PDF::loadView('frontend.pages.candidates.show-resume', compact('data','label', 'arr'));
 
         // $pdf = PDF::setOptions([
@@ -126,11 +126,11 @@ class CandidatesController extends Controller
         //         // 'images' => true,
         //         // 'enable-smart-shrinking' => true,
         //         // 'no-stop-slow-scripts' => true,
-                
+
         //     ])
         //     ->loadView('frontend.pages.candidates.print-test', compact('data','label', 'arr'));
-            
-        // return $pdf->stream('candidate-resume.pdf'); 
+
+        // return $pdf->stream('candidate-resume.pdf');
     }
 
     public function search(Request $request)
@@ -299,10 +299,6 @@ class CandidatesController extends Controller
             'gender' => 'required',
             'discipline' => 'required',
 
-            // 'profile_picture' => 'nullable|image',
-
-            'cv' => 'nullable|mimes:pdf',
-
             'facebook_link' => 'nullable|url',
 
             'twitter_link' => 'nullable|url',
@@ -334,40 +330,21 @@ class CandidatesController extends Controller
             $user->profile_picture = ImageUploadHelper::update('profile_picture', $request->file('profile_picture'), 'pr-' . time(), 'images/users', 'images/users/' . $user->profile_picture);
 
         }
-        
+
         $user->save();
         $discipline = implode(',', $request->discipline);
-        if ($request->cv) {
 
-            $user->candidate->update([
+        $user->candidate->update([
 
-                'date_of_birth' => Carbon::parse($request->date_of_birth)->format('Y-m-d'),
+            'date_of_birth' => Carbon::parse($request->date_of_birth)->format('Y-m-d'),
 
-                'cv' => UploadHelper::update('cv', $request->file('cv'), 'cv-' . time(), 'files/cv', 'files/cv/' . $user->candidate->cv),
+            'descipline_id' => $discipline,
 
-                'descipline_id' => $discipline,
+            'gender' => $request->gender,
 
-                'gender' => $request->gender,
+            'career_level_id' => $request->career_level_id,
 
-                'career_level_id' => $request->career_level_id,
-
-            ]);
-
-        } else {
-
-            $user->candidate->update([
-
-                'date_of_birth' => Carbon::parse($request->date_of_birth)->format('Y-m-d'),
-
-               'descipline_id' => $discipline,
-
-                'gender' => $request->gender,
-
-                'career_level_id' => $request->career_level_id,
-
-            ]);
-
-        }
+        ]);
 
         session()->flash('success', 'Your profile information has been updated  ');
 
@@ -541,7 +518,7 @@ class CandidatesController extends Controller
 
     public function passwordChangeUpdate(Request $request)
     {
-    
+
         if (!Auth::check()) {
 
             session()->flash('error', 'Sorry   You are not an authenticated Employer  ');
@@ -550,7 +527,7 @@ class CandidatesController extends Controller
 
         }
 
-    
+
         $this->validate($request, [
 
             'new_password' => 'required|min:8',
@@ -559,7 +536,7 @@ class CandidatesController extends Controller
 
         ]);
 
-        
+
         $user = Auth::user();
 
         $user_id = $user->id;
@@ -592,7 +569,7 @@ class CandidatesController extends Controller
             {
                 session()->flash('error', 'No data found !');
             }
-            
+
             return back();
         }
 

@@ -228,7 +228,7 @@ Candidate Dashboard | {{ App\Models\Setting::first()->site_title }}
 
 										<i class="fa fa-male font30"></i>
 
-										<h4 class="ml-2 text-success text-center  py-3">{{$aptitude->result}}</h4>
+										<h4 class="ml-2 text-success text-center  py-3">Completed</h4>
 
 
 

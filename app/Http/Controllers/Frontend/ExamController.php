@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
+use App\Models\JobActivity;
 use App\Models\Question;
 use App\Models\Result;
 use Illuminate\Http\Request;
@@ -30,9 +31,18 @@ class ExamController extends Controller
 
     public function index($id)
     {
-
-        return view('frontend.pages.employers.exam.exam', compact('id'));
-
+        $job_id = '';
+        $job_activity  = JobActivity::where('id', $id)->first();
+        if(!empty($job_activity)){
+            $job_id =  $job_activity->job_id;
+            if($job_activity->user_id == auth()->user()->id){
+                return view('frontend.pages.employers.exam.exam', compact('id','job_id'));
+            }else{
+                return abort(404);
+            }
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -50,38 +60,27 @@ class ExamController extends Controller
 
         $questions = [];
 
-        $job_skills = Job::with('skills')->where('id', $id)->first();
 
-        if (!empty($job_skills)) {
 
-            $skills = $job_skills->skills;
+        $job_activity = JobActivity::where('id', $id)->first();
+        if(!empty($job_activity)){
+            $job_id = $job_activity->job_id;
+            $job = Job::where('id', $job_id)->first();
+            if(!empty($job)){
+                $job_category_id = $job->category_id;
 
-            if (count($skills) > 0) {
-
-                $skill_id = $skills->pluck('id');
-
-                $all_questions = Question::with('answers')->get();
+                $all_questions = Question::with('answers')->whereNotNull('positions')->get();
 
                 $all_question = [];
 
                 for ($d = 0; $d < count($all_questions); $d++) {
+                    $positions = $all_questions[$d]['positions'];
+                    $positions = explode(',', $positions);
 
-                    $skills = $all_questions[$d]['skills'];
-
-                    for ($k = 0; $k < count($skills); $k++) {
-
-                        $singles = $skills[$k];
-
-                        for ($j = 0; $j < count($skill_id); $j++) {
-
-                            $skill_id[$j] . $singles;
-
-                            if ($singles == $skill_id[$j]) {
-
-                                $all_question[] = $all_questions[$d];
-
-                            }
-
+                    for ($k = 0; $k < count($positions); $k++) {
+                        $singlePosition = $positions[$k];
+                        if ($singlePosition == $job_category_id) {
+                            $all_question[] = $all_questions[$d];
                         }
 
                     }
@@ -89,90 +88,171 @@ class ExamController extends Controller
                 }
                 $questions = $this->array_unique_custom($all_question);
 
-                $new_questions = [];
 
-                foreach ($questions as $que) {
+                if (count($questions) >= 30) {
 
-                    $exp = array_map('intval', explode(',', $que['exparience']));
+                    $data = [];
 
-                    if (in_array($job_skills->experience_id, $exp)) {
+                    for ($i = 0; $i < count($questions); $i++) {
 
-                        $new_questions[] = $que;
+                        $data[$i]['id'] = $questions[$i]->id;
+
+                        $data[$i]['questions'] = $questions[$i]->question;
+
+                        $data[$i]['responses']['answer_1'] = $questions[$i]->answers['answer_1'];
+
+                        $data[$i]['responses']['answer_2'] = $questions[$i]->answers['answer_2'];
+
+                        $data[$i]['responses']['answer_3'] = $questions[$i]->answers['answer_3'];
+
+                        $data[$i]['responses']['answer_4'] = $questions[$i]->answers['answer_4'];
 
                     }
+
+                    $withUser = [
+
+                        'id' => auth()->user()->id,
+
+                        'user' => auth()->user()->name,
+
+                        $data,
+
+                    ];
+
+                    return $withUser;
 
                 }
 
-                $questions = collect($new_questions);
-                if (count($questions) > 30) {
-                    $questions = $questions->random(30);
-                    $collection = collect($questions);
+                return response()->json(['error' => 'error']);
 
-                    $question_pluck_id = $collection->pluck('id');
-
-                    $newQuestion = Question::with('answers')->inRandomOrder()->get();
-
-                    $new_collection = collect($newQuestion);
-
-                    $final = $new_collection->whereNotIn('id', $question_pluck_id);
-
-                    if (count($questions) < 30) {
-
-                        $question_left = (30 - count($questions));
-
-                        $result = collect($final)->random($question_left);
-
-                        $collect = collect($questions);
-
-                        return $questions = $collect->merge($result);
-
-                    }
-                } else {
-                    return response()->json(['error' => 'error']);
-                }
-            } else {
-
-                $questions = Question::with('answers')->inRandomOrder()->limit(30)->get();
 
             }
-
         }
 
-        if (count($questions) >= 30) {
 
-            $data = [];
+        //  $job_skills = Job::with('skills')->where('id', $id)->first();
 
-            for ($i = 0; $i < count($questions); $i++) {
+        // if (!empty($job_skills)) {
 
-                $data[$i]['id'] = $questions[$i]->id;
+        //     $skills = $job_skills->skills;
 
-                $data[$i]['questions'] = $questions[$i]->question;
+        //     if (count($skills) > 0) {
 
-                $data[$i]['responses']['answer_1'] = $questions[$i]->answers['answer_1'];
+        //         $skill_id = $skills->pluck('id');
 
-                $data[$i]['responses']['answer_2'] = $questions[$i]->answers['answer_2'];
+        //         $all_questions = Question::with('answers')->get();
 
-                $data[$i]['responses']['answer_3'] = $questions[$i]->answers['answer_3'];
+        //         $all_question = [];
 
-                $data[$i]['responses']['answer_4'] = $questions[$i]->answers['answer_4'];
+        //         for ($d = 0; $d < count($all_questions); $d++) {
 
-            }
+        //             $skills = $all_questions[$d]['skills'];
 
-            $withUser = [
+        //             for ($k = 0; $k < count($skills); $k++) {
 
-                'id' => auth()->user()->id,
+        //                 $singles = $skills[$k];
 
-                'user' => auth()->user()->name,
+        //                 for ($j = 0; $j < count($skill_id); $j++) {
 
-                $data,
+        //                     $skill_id[$j] . $singles;
 
-            ];
+        //                     if ($singles == $skill_id[$j]) {
 
-            return $withUser;
+        //                         $all_question[] = $all_questions[$d];
 
-        }
+        //                     }
 
-        return response()->json(['error' => 'error']);
+        //                 }
+
+        //             }
+
+        //         }
+        //         $questions = $this->array_unique_custom($all_question);
+
+        //         $new_questions = [];
+
+        //         foreach ($questions as $que) {
+
+        //             $exp = array_map('intval', explode(',', $que['exparience']));
+
+        //             if (in_array($job_skills->experience_id, $exp)) {
+
+        //                 $new_questions[] = $que;
+
+        //             }
+
+        //         }
+
+        //         $questions = collect($new_questions);
+        //         if (count($questions) > 30) {
+        //             $questions = $questions->random(30);
+        //             $collection = collect($questions);
+
+        //             $question_pluck_id = $collection->pluck('id');
+
+        //             $newQuestion = Question::with('answers')->inRandomOrder()->get();
+
+        //             $new_collection = collect($newQuestion);
+
+        //             $final = $new_collection->whereNotIn('id', $question_pluck_id);
+
+        //             if (count($questions) < 30) {
+
+        //                 $question_left = (30 - count($questions));
+
+        //                 $result = collect($final)->random($question_left);
+
+        //                 $collect = collect($questions);
+
+        //                 return $questions = $collect->merge($result);
+
+        //             }
+        //         } else {
+        //             return response()->json(['error' => 'error']);
+        //         }
+        //     } else {
+
+        //         $questions = Question::with('answers')->inRandomOrder()->limit(30)->get();
+
+        //     }
+
+        // }
+
+        // if (count($questions) >= 30) {
+
+        //     $data = [];
+
+        //     for ($i = 0; $i < count($questions); $i++) {
+
+        //         $data[$i]['id'] = $questions[$i]->id;
+
+        //         $data[$i]['questions'] = $questions[$i]->question;
+
+        //         $data[$i]['responses']['answer_1'] = $questions[$i]->answers['answer_1'];
+
+        //         $data[$i]['responses']['answer_2'] = $questions[$i]->answers['answer_2'];
+
+        //         $data[$i]['responses']['answer_3'] = $questions[$i]->answers['answer_3'];
+
+        //         $data[$i]['responses']['answer_4'] = $questions[$i]->answers['answer_4'];
+
+        //     }
+
+        //     $withUser = [
+
+        //         'id' => auth()->user()->id,
+
+        //         'user' => auth()->user()->name,
+
+        //         $data,
+
+        //     ];
+
+        //     return $withUser;
+
+        // }
+
+        // return response()->json(['error' => 'error']);
 
     }
 
@@ -231,7 +311,7 @@ class ExamController extends Controller
     public function examStatus()
     {
 
-        return Result::where('user_id', auth()->user()->id)->select('job_id')->get();
+        return Result::where('user_id', auth()->user()->id)->select('job_activity_id')->get();
 
     }
 
@@ -324,7 +404,7 @@ class ExamController extends Controller
 
         $time_taken = 1800 - $request->seconds;
 
-        $y = gmdate("i.s", $time_taken);
+         $y = gmdate("i.s", $time_taken);
 
         $result = round(($x * (60 - $y)) / 100, 2);
 
@@ -354,6 +434,8 @@ class ExamController extends Controller
 
         $Result->job_id = $request->job_id;
 
+        $Result->job_activity_id = $request->job_activity_id;
+
         $Result->result = $flag;
 
         $Result->que_answer = $x;
@@ -364,15 +446,11 @@ class ExamController extends Controller
 
         $Result->save();
 
-        $job_id = Job::where('id', $request->job_id)->select('slug')->first();
-
         return response()->json(
 
             [
 
                 'success' => 'success',
-
-                'job_id' => $job_id,
 
             ]
 

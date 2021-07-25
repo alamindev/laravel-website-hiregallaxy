@@ -81,31 +81,11 @@
 
 				@else
 
-				@php
-
-					$result = \App\Models\Result::where('job_id', $single_job->id)->where('user_id', auth()->user()->id)->first();
-
-				@endphp
-
-				@if($result || !count($single_job->skills) > 0)
-
 					<a href="#apply-job-modal" data-toggle="modal" class="btn btn-outline-yellow applyJobData"
 
 					data-job-id="{{ $single_job->id }}"  data-company-id="{{ $single_job->user->id }}" data-currency="{{ $single_job->getCurrencyName() }}">
-
 							Apply Now
-
 						</a>
-
-					@else
-
-						<a href="{{route('exam', $single_job->id)}}" class="btn btn-outline-yellow" >
-
-							Apply Now
-
-						</a>
-
-					@endif
 
 				@endif
 

@@ -54,8 +54,8 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 							<th style="padding:5px 22px 10px 6px !important">Personality</th>
 
 							<th style="padding:5px 22px 10px 6px !important">Aptitude</th>
-
-							<th style="padding:5px 22px 10px 6px !important">CV</th>
+{{--
+							<th style="padding:5px 22px 10px 6px !important">CV</th> --}}
 
 							<th style="padding:5px 22px 10px 6px !important" class="sortoff">Cover Letter</th>
 
@@ -76,6 +76,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 								$cand = \App\Models\CandidateProfile::where('user_id', $application->user_id)->first();
 
 								@endphp
+                                    <a href="{{ route('candidates.show', $application->user->name ) }}" target="_blank">
 
 								<img class="d-block text-center" src="{{ App\Helpers\ReturnPathHelper::getUserImage($application->user_id) }}"
 
@@ -85,6 +86,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								{{ $application->user->name }}
 
+                                    </a>
 								</td>
 
 								<td>
@@ -101,7 +103,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								@php
 
-								$result = \App\Models\Result::where('job_id', $application->job_id)->where('user_id', $application->user_id)->first();
+								$result = \App\Models\Result::where('job_acitvity_id', $application->id)->where('user_id', $application->user_id)->first();
 
 								@endphp
 
@@ -111,7 +113,9 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								@else
 
-								<td>---</td>
+								<td>
+                                    <button class="btn btn-success assin_modal" data-id="{{ $application->id }}">Assign</button>
+                                </td>
 
 								@endif
 
@@ -158,11 +162,12 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								@else
 
-								<td>{{$apt['result']}}</td>
+								<td>Completed</td>
+								{{-- <td>{{$apt['result']}}</td> --}}
 
 								@endif
 
-								<td>
+								{{-- <td>
 
 								@if ($application->cv != null)
 
@@ -176,7 +181,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 									@endif
 
-								</td>
+								</td> --}}
 
 								<td>
 
@@ -246,7 +251,31 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 			</div>
 
 		</div>
-
+        <div class="modal animated fadeIn" id="assign">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-theme font22 bold"> </h4>
+                            <button type="button" class="close ml-2"
+                            data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body pb-5">
+                            <h4 class="text-center">Send link to a candidate to take skill test</h4>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <button class="btn btn-info" id="get_link">Get the link</button>
+                                <div class=" show-href">
+                                    <div class="custom-link"></div>
+                                    <div class="copy-btn ml-2">
+                                        <i class="fa fa-clone" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </div>
 	</section>
 
 @endsection
@@ -264,11 +293,61 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 <script>
 
 $("#candidateTable").dataTable({
-aoColumnDefs: [{
-bSortable: false,
-aTargets: ["sortoff"]
-}]
+    aoColumnDefs: [{
+    bSortable: false,
+    aTargets: ["sortoff"]
+    }]
 });
+
+$('.assin_modal').click(function(){
+    $('#assign').modal('show');
+    let id = $(this).attr('data-id');
+    $('#get_link').attr('data-id',id);
+    $('#get_link').show();
+    $('.show-href').removeClass('active-href')
+})
+
+$('#get_link').click(function(){
+    $(this).hide();
+    let id = $(this).data('id');
+    let href = `https://joblrs.com/exam/home/${id}`;
+    $('.custom-link').text(href);
+    $('.show-href').addClass('active-href')
+})
+
+const copyText = document.querySelector('.copy-btn');
+
+    copyText.addEventListener('click', () => {
+        const link =  document.querySelector('.custom-link')
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(link);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        try {
+            document.execCommand('copy');
+            selection.removeAllRanges();
+
+            const mailId = link.textContent;
+            link.textContent = 'Copied!';
+            link.classList.add('text-success');
+
+            setTimeout(() => {
+                link.textContent = mailId;
+                link.classList.remove('text-success');
+            }, 1000);
+        } catch (e) {
+            link.textContent = 'Couldn\'t copy, hit Ctrl+C!';
+            link.classList.add('error');
+
+            setTimeout(() => {
+                errorMsg.classList.remove('show');
+            }, 1200);
+        }
+    });
+
+
 
 </script>
 

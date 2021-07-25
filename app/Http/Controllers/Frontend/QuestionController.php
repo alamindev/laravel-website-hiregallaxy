@@ -8,7 +8,11 @@ use App\Models\Answers;
 use App\Models\Experience;
 use App\Models\Question;
 use App\Models\Skill;
+use App\Models\Category;
 use Illuminate\Support\Facades\Input;
+use Auth;
+use Image;
+
 class QuestionController extends Controller
 {
 
@@ -54,8 +58,9 @@ class QuestionController extends Controller
         $skills = Skill::orderBy('created_at', 'desc')->where('type',0)->where('status', 1)->get();
 
         $experiences = Experience::get();
+         $positions = Category::where('status', 1)->orderBy('name', 'asc')->get();
 
-        return view('frontend.pages.employers.question.create')->with(compact('skills', 'experiences'));
+        return view('frontend.pages.employers.question.create')->with(compact('skills', 'experiences','positions'));
 
     }
 
@@ -79,12 +84,15 @@ class QuestionController extends Controller
         ]);
 
         $explode = implode(',', $request->expariences);
+        $positions = implode(',', $request->positions);
 
         $question = new Question();
 
         $question->question = $request->question;
 
         $question->skills = $request->skills;
+
+        $question->positions = $positions;
 
         $question->exparience = $explode;
 
@@ -116,10 +124,15 @@ class QuestionController extends Controller
             if ($file->isValid()) {
 
                 $filename = rand(1000, 9999) . $file->getClientOriginalName();
+                $folder = public_path() . '/uploads/' . Auth::id() .'/';
 
-                $file->move(public_path() . '/uploads/', $filename);
+                if (!\File::exists($folder)) {
+                    \File::makeDirectory($folder, 0775, true, true);
+                }
+                $location = public_path() . '/uploads/' . Auth::id().'/'. $filename;
+                Image::make($file)->save($location);
 
-                $url = url('uploads/' . $filename);
+                $url = url('uploads/' . Auth::id() .'/'. $filename);
 
             } else {
 
@@ -152,7 +165,7 @@ class QuestionController extends Controller
     public function fileBrowser()
     {
 
-        $paths = glob(public_path('uploads/*'));
+        $paths = glob(public_path('uploads/'. auth()->user()->id . '/*'));
 
         $fileNames = array();
 
@@ -162,7 +175,7 @@ class QuestionController extends Controller
 
         }
 
-        return view('backend.pages.question.file_browser')->with(compact('fileNames'));
+        return view('frontend.pages.employers.question.file_browser')->with(compact('fileNames'));
 
     }
 
@@ -205,8 +218,8 @@ class QuestionController extends Controller
         $skills = Skill::orderBy('created_at', 'desc')->where('type',0)->where('status', 1)->get();
 
         $experiences = Experience::get();
-
-        return view('frontend.pages.employers.question.edit')->with(compact('skills', 'question', 'experiences'));
+        $positions = Category::where('status', 1)->orderBy('name', 'asc')->get();
+        return view('frontend.pages.employers.question.edit')->with(compact('skills', 'question', 'experiences', 'positions'));
 
     }
 
@@ -234,12 +247,13 @@ class QuestionController extends Controller
         ]);
 
         $explode = implode(',', $request->expariences);
-
+        $positions = implode(',', $request->positions);
         $question = Question::find($id);
 
         $question->question = $request->question;
 
         $question->skills = $request->skills;
+        $question->positions =   $positions;
 
         $question->exparience = $explode;
 
@@ -259,10 +273,10 @@ class QuestionController extends Controller
         Question::find($question_id)->delete();
 
         Answers::where('question_id', $question_id)->delete();
-
-        return redirect('admin/question')->with('message', 'Question deleted successfully');
+        return redirect()->route('question.index')->with('message', 'Question deleted successfully');
 
     }
+
 
     public function syncAnswer(Request $request, $question_id)
     {

@@ -44,7 +44,7 @@ height: auto !important;
 
 
 
-          <a href="{{ route('question.index') }}" class=" btn btn-sm btn-primary shadow-sm"><i class="fas fa-angle-left fa-sm text-white-50"></i> Back</a>
+          <a href="{{ route('question.index') }}" class=" btn btn-sm btn-primary shadow-sm"><i class="fa fa-angle-left fa-sm text-white-50"></i> Back</a>
 
         </div>
 
@@ -89,6 +89,19 @@ height: auto !important;
                 <td>:</td>
 
                 <td> @foreach($question->getAllExperience() as $e)
+
+                        <span class="badge badge-success">{{$e}}</span>
+
+                      @endforeach</td>
+
+            </tr>
+            <tr>
+
+                <td>Positions</td>
+
+                <td>:</td>
+
+                <td> @foreach($question->getAllPosition() as $e)
 
                         <span class="badge badge-success">{{$e}}</span>
 

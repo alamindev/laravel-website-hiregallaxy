@@ -122,7 +122,7 @@
 
              <div class="thumbnail">
 
-             <img  src="{{ asset('uploads/'. $fileName)}}" alt="humb" title="https://joblrs.com/uploads/{{$fileName}}" width="200" height="100"/>
+             <img  src="{{ asset('uploads/'. auth()->user()->id . '/'. $fileName)}}" alt="humb"   width="200" height="100"/>
 
              <br/>
 

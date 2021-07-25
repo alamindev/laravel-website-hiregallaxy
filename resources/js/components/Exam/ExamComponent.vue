@@ -7,13 +7,13 @@
         <div class="hiregallaxy__start_exam py-5 d-flex flex-column align-items-center">
             <h1 class="text-danger text-center pb-2">You are Allreay Give Your Skill Test!</h1>
             <a :href="url" class="btn btn-info text-center text-light">
-                Go Back & apply job
+                Go Back
             </a>
         </div>
     </div>
     <div v-if="error" class="d-flex justify-content-center mt-5">
         <div class="hiregallaxy__start_exam py-5 d-flex flex-column align-items-center">
-            <h4 class="text-danger text-center pb-2">Whoops! Skills doesn't match. Please update your skills and try again.</h4>
+            <h4 class="text-danger text-center pb-2">Whoops! Question doesn't match. please contact with the employer.</h4>
             <a @click="reload" class="btn btn-info text-center text-light">
                 Go Back
             </a>
@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="hiregallaxy__submit_result d-flex justify-content-center my-5 py-5" v-if="showResult">
-            <button @click="submitResult" class="btn btn-success">Submit & Apply Job</button>
+            <button @click="submitResult" class="btn btn-success">Submit</button>
         </div>
     </div>
 </div>
@@ -140,7 +140,7 @@ let Timer = {
     }
 }
 export default {
-    props: ['url', 'id'],
+    props: ['url', 'id','job_id'],
     mounted() {
         var app = this;
     },
@@ -187,7 +187,8 @@ export default {
     },
     methods: {
         StartExam() {
-            const status = this.status.some(el => el.job_id == this.id)
+            const status = this.status.some(el => el.job_activity_id == this.id)
+
             if (status) {
                 this.exam_status = true
                 return
@@ -260,7 +261,7 @@ export default {
             });
         },
         fetchData() {
-            Axios.get('/jobs/exam/questions/' + this.id).then(async (res) => {
+            Axios.get('/exam/questions/' + this.id).then(async (res) => {
                 if (res.data.error == 'error') {
                     this.loading = false;
                     this.error = true;
@@ -327,21 +328,22 @@ export default {
                 total: this.quiz.questions.length,
                 seconds: this.time,
                 answer: this.answer,
-                job_id: this.id
+                job_id: this.job_id,
+                job_activity_id: this.id
             }
-            Axios.post('/jobs/exam/questions/results/final', data).then((res) => {
+            Axios.post('/exam/questions/results/final', data).then((res) => {
                 if (res.data.success == 'success') {
-                    window.location = 'https://joblrs.com/jobs/view/' + res.data.job_id.slug + '?modal=true';
+                    window.location = 'https://joblrs.com/candidates/dashboard';
                 }
             });
         },
         user_finished_exam() {
-            Axios.get('/jobs/exam/check-exam-status').then((res) => {
+            Axios.get(`/exam/check-exam-status`).then((res) => {
                 this.status = res.data
             });
         },
         reload() {
-            window.location = 'https://joblrs.com/jobs/';
+            window.location = 'https://joblrs.com/candidates/dashboard';
         }
     },
     created() {

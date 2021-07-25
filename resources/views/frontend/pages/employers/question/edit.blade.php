@@ -33,11 +33,11 @@
 
         <div class="float-right">
 
-          <a href="{{ route('quetion.index') }}"
+          <a href="{{ route('question.index') }}"
 
             class=" btn btn-sm btn-primary shadow-sm"><i
 
-              class="fas fa-arrow-left fa-sm text-white-50"></i> All Questions</a>
+              class="fa fa-arrow-left fa-sm text-white-50"></i> All Questions</a>
 
         </div>
 
@@ -161,7 +161,7 @@
 
                   <label id="skills" class="form-label">
 
-                  Skills <span class="text-danger">*</span>
+                  Skills  <span class="text-danger">*</span>
 
                 </label>
 
@@ -231,7 +231,24 @@
 
                 </div>
 
+                <div class="form-group">
 
+                    <label id="exparience" class="form-label">
+
+                      Position <span class="text-danger">*</span>
+                      </label>
+
+                    <select name="positions[]" id="position" required class="form-control position" multiple>
+
+                      @foreach($positions as $position)
+
+                        <option value="{{$position->id}}" {{in_array($position->id, explode(',',$question->positions)) ? 'selected' :''}}>{{$position->name}}</option>
+
+                      @endforeach
+
+                    </select>
+
+                  </div>
 
             </div>
 
@@ -244,10 +261,6 @@
 
 
           <div class="mt-3">
-
-            <button type="button" class="btn btn-danger float-right mt-1 ml-2 " data-dismiss="modal"><i
-
-                class="fa fa-times"></i> Cancel</button>
 
 
 
@@ -295,6 +308,7 @@
     var select2 = $('select.skillselect').select2();
 
     $('.select2exp').select2();
+    $('#position').select2();
 
         CKEDITOR.replace('question', {
 

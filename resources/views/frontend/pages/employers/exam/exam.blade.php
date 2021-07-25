@@ -4,7 +4,7 @@
 Employer Exam | {{ App\Models\Setting::first()->site_title }}
 @endsection
 
-@section('stylesheets') 
+@section('stylesheets')
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@ Employer Exam | {{ App\Models\Setting::first()->site_title }}
 	<div class="container">
         <div class="row">
             <div class="col-lg-12">
-            <exam-component url="{{route('jobs')}}" id="{{$id}}" ></exam-component> 
+            <exam-component url="{{route('candidates.dashboard')}}" id="{{$id}}" job_id="{{ $job_id }}" ></exam-component>
             </div>
         </div>
     </div>
@@ -22,5 +22,5 @@ Employer Exam | {{ App\Models\Setting::first()->site_title }}
 
 
 @section('scripts')
- 
+
 @endsection

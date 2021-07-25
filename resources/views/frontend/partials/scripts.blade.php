@@ -25,9 +25,33 @@
 @include('frontend.partials.flash-messages')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="{{ asset('js/jquery.cookie.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
 <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+
     })
 </script>
+@auth
+@if(auth()->user()->is_company == 0)
+<script>
+    $(function () {
+        jQuery.noConflict();
+        var cookieValue = jQuery.cookie("remember-popup");
+
+        if(cookieValue != 'true'){
+            window.setTimeout(function(){
+                jQuery("#alertmodal").modal('show');
+            },5000);
+        }
+
+        jQuery('#remember-later').click(function () {
+            jQuery.cookie("remember-popup", true, { expires : 1 });
+            jQuery("#alertmodal").modal('hide');
+        })
+    })
+</script>
+
+@endif
+@endauth

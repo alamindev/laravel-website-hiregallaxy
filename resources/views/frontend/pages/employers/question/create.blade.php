@@ -39,7 +39,7 @@
 
             class=" btn btn-sm btn-primary shadow-sm"><i
 
-              class="fas fa-arrow-left fa-sm text-white-50"></i> All Questions</a>
+              class="fa fa-arrow-left fa-sm text-white-50"></i> All Questions</a>
 
         </div>
 
@@ -187,7 +187,7 @@
 
                     Experience <span class="text-danger">*</span>
 
-                </label>
+                    </label>
 
                   <select name="expariences[]" id="exparience" required class="form-control select2exp" multiple>
 
@@ -232,8 +232,27 @@
                   </select>
 
                 </div>
+                <div class="form-group">
 
+                    <label id="exparience" class="form-label">
+
+                      Position <span class="text-danger">*</span>
+
+                      </label>
+
+                    <select name="positions[]" id="position" required class="form-control position" multiple>
+
+                      @foreach($positions as $position)
+
+                        <option value="{{$position->id}}">{{$position->name}}</option>
+
+                      @endforeach
+
+                    </select>
+
+                  </div>
             </div>
+
 
 
 
@@ -244,13 +263,6 @@
 
 
           <div class="mt-3">
-
-            <button type="button" class="btn btn-danger float-right mt-1 ml-2 " data-dismiss="modal"><i
-
-                class="fa fa-times"></i> Cancel</button>
-
-
-
             <button type="submit" class="btn btn-success float-right mt-1 ">
 
               <i class="fa fa-check"></i> Save
@@ -295,14 +307,15 @@
     var select2 = $('select.skillselect').select2();
 
      $('.select2exp').select2();
+     $('#position').select2();
 
         CKEDITOR.replace('question', {
 
-		    filebrowserUploadUrl: "{{asset('admin/questions/uploads?_token=' . csrf_token()) }}&type=file",
+		    filebrowserUploadUrl: "{{asset('employers/questions/uploads?_token=' . csrf_token()) }}&type=file",
 
-		    imageUploadUrl: "{{asset('admin/questions/uploads?_token='. csrf_token() )  }}&type=image",
+		    imageUploadUrl: "{{asset('employers/questions/uploads?_token='. csrf_token() )  }}&type=image",
 
-            filebrowserBrowseUrl: "{{url('admin/question/file_browser') }}",
+            filebrowserBrowseUrl: "{{url('employers/question/file_browser') }}",
 
             filebrowserUploadMethod: 'form'
 
@@ -313,11 +326,11 @@
 
 		CKEDITOR.replace('answer_1', {
 
-		    filebrowserUploadUrl: "{{asset('admin/questions/uploads?_token=' . csrf_token()) }}&type=file",
+		    filebrowserUploadUrl: "{{asset('employers/questions/uploads?_token=' . csrf_token()) }}&type=file",
 
-		    imageUploadUrl: "{{asset('admin/questions/uploads?_token='. csrf_token() )  }}&type=image",
+		    imageUploadUrl: "{{asset('employers/questions/uploads?_token='. csrf_token() )  }}&type=image",
 
-            filebrowserBrowseUrl: "{{asset('admin/question/file_browser') }}",
+            filebrowserBrowseUrl: "{{asset('employers/question/file_browser') }}",
 
             filebrowserUploadMethod: 'form'
 
@@ -327,11 +340,11 @@
 
 		CKEDITOR.replace('answer_2', {
 
-		    filebrowserUploadUrl: "{{asset('admin/questions/uploads?_token=' . csrf_token()) }}&type=file",
+		    filebrowserUploadUrl: "{{asset('employers/questions/uploads?_token=' . csrf_token()) }}&type=file",
 
-		    imageUploadUrl: "{{asset('admin/questions/uploads?_token='. csrf_token() )  }}&type=image",
+		    imageUploadUrl: "{{asset('employers/questions/uploads?_token='. csrf_token() )  }}&type=image",
 
-            filebrowserBrowseUrl: "{{asset('admin/question/file_browser') }}",
+            filebrowserBrowseUrl: "{{asset('employers/question/file_browser') }}",
 
             filebrowserUploadMethod: 'form'
 
@@ -341,11 +354,11 @@
 
 		CKEDITOR.replace('answer_3', {
 
-		    filebrowserUploadUrl: "{{asset('admin/questions/uploads?_token=' . csrf_token()) }}&type=file",
+		    filebrowserUploadUrl: "{{asset('employers/questions/uploads?_token=' . csrf_token()) }}&type=file",
 
-		    imageUploadUrl: "{{asset('admin/questions/uploads?_token='. csrf_token() )  }}&type=image",
+		    imageUploadUrl: "{{asset('employers/questions/uploads?_token='. csrf_token() )  }}&type=image",
 
-            filebrowserBrowseUrl: "{{asset('admin/question/file_browser') }}",
+            filebrowserBrowseUrl: "{{asset('employers/question/file_browser') }}",
 
             filebrowserUploadMethod: 'form'
 
@@ -355,11 +368,11 @@
 
 		CKEDITOR.replace('answer_4', {
 
-		    filebrowserUploadUrl: "{{asset('admin/questions/uploads?_token=' . csrf_token()) }}&type=file",
+		    filebrowserUploadUrl: "{{asset('employers/questions/uploads?_token=' . csrf_token()) }}&type=file",
 
-		    imageUploadUrl: "{{asset('admin/questions/uploads?_token='. csrf_token() )  }}&type=image",
+		    imageUploadUrl: "{{asset('employers/questions/uploads?_token='. csrf_token() )  }}&type=image",
 
-            filebrowserBrowseUrl: "{{asset('admin/question/file_browser') }}",
+            filebrowserBrowseUrl: "{{asset('employers/question/file_browser') }}",
 
             filebrowserUploadMethod: 'form'
 

@@ -24,6 +24,7 @@ use App\Models\Skill;
 use App\Models\Template;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -663,9 +664,7 @@ class JobsController extends Controller
             $job->salary_currency = $request->salary_currency;
         }
         $job->gender = $request->gender;
-        $getDeadline = $request->deadline;
-        $getDeadline = substr($getDeadline, 6, 4) . '-' . substr($getDeadline, 0, 2) . '-' . substr($getDeadline, 3, 2);
-        $job->deadline = $getDeadline;
+        $job->deadline = Carbon::parse($request->deadline)->format('Y-m-d H:i:s');
         $job->is_featured = 1;
         $job->is_confirmed = 1;
         $job->user_id = Auth::id();
@@ -683,11 +682,10 @@ class JobsController extends Controller
         $job->about_company = $request->about_company;
 
         $job->city_id = $request->city;
-
+        $job->skills =  $request->skills;
         $job->save();
-        if ($request->has('job_skill_check') && $request->job_skill_check != '') {
-            $job->skills()->sync($request->skills);
-        }
+
+
 
         session()->flash('success', 'Job has been posted successfully  ');
         return redirect()->route('jobs');

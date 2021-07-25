@@ -128,7 +128,7 @@ label {
     border: 1px solid #4caf50;
     color: #ff7c39;
     border-radius: 20px !important;
-    padding: 4px 20px !important;
+    padding: 4px 10px !important;
 }
 
 .btn-yellow {
@@ -606,7 +606,7 @@ span.counts-more {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
 }
 
 .count-thing {
@@ -1298,7 +1298,7 @@ input[type="radio"] {
 }
 
 .job-detail-page {
-    margin-top: -70px;
+    margin-top: 10px;
 }
 
 .job-detail-page container {
@@ -1503,6 +1503,8 @@ a.social-login.facebook {
 .footer-section {
     background: #6d5387;
     color: #fff;
+    z-index: 9999;
+    position: relative;
 }
 
 .footer-area p {
@@ -1573,6 +1575,8 @@ ul.footer-links {
     color: #cec9ca;
     padding: 30px;
     letter-spacing: 1px;
+    position: relative;
+    z-index: 9999;
 }
 
 .hidden {
@@ -1624,7 +1628,7 @@ ul.footer-links {
     position: fixed;
     bottom: 20px;
     right: 30px;
-    z-index: 99;
+    z-index: 99999;
     font-size: 15px;
     border: none;
     outline: 0;
@@ -2144,6 +2148,9 @@ p {
 .row {
     margin-right: 0;
 }
+.new--navbar{
+    padding: 0 1rem !important
+}
 
 .font-3 {
     font-size: 24px;
@@ -2170,18 +2177,23 @@ p {
     top: 94px !important;
     background: #2f323a;
     position: fixed;
-    width: 250px;
+    width: 220px;
     z-index: 3;
-    left: -250px;
     height: 100%;
     transition: 0.5s;
     transition-property: left;
+    left: 0;
 }
 
 .active {
-    left: 0px;
+    left: 0px !important;
 }
 
+@media (max-width: 600px){
+.new--navbar  .nav-link{
+    text-align: center;
+}
+}
 .turn-off {
     left: -300px;
 }
@@ -2202,7 +2214,7 @@ p {
     color: #fff;
     display: block;
     width: 100%;
-    line-height: 60px;
+    line-height: 50px;
     text-decoration: none;
     padding-left: 20px;
     box-sizing: border-box;
@@ -2217,7 +2229,25 @@ p {
 .sidebar i {
     padding-right: 10px;
 }
-
+.mobile--control{
+    display: none;
+}
+.page-sidebar-area{
+    width: calc(100% - 210px) !important;
+    margin-left: auto !important;
+}
+@media (max-width: 991px){
+    .mobile--control{
+        display: block;
+    }
+    .page-sidebar-area{
+        width:  100% !important;
+        margin-left: auto;
+    }
+    .sidebar{
+        left: -220px ;
+    }
+}
 label #sidebar_btn {
     z-index: 1;
     color: #fff;

@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master-two')
 
 @section('stylesheets')
-
+<link href="{{ asset('admin-asset/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 <style>
 
 #dataTable img {
@@ -46,7 +46,7 @@ height: auto !important;
 
 
                         <a href="{{ route('question.create') }}" class="  btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus-circle fa-sm text-white-50"></i> Add New Question</a>
+                                class="fa fa-plus-circle fa-sm text-white-50"></i> Add New Question</a>
 
                     </div>
 
@@ -73,6 +73,7 @@ height: auto !important;
                                     <th width="30%">Question</th>
 
                                     <th width="10%">Skill</th>
+                                    <th width="10%">Position</th>
 
                                     <th width="15%">Experience</th>
                                     <th width="15%" class="sortoff">Manage</th>
@@ -101,7 +102,16 @@ height: auto !important;
 
                                     </td>
 
-                                    <td> @foreach($question->getAllExperience() as $e)
+                                    <td> @foreach($question->getAllPosition() as $e)
+
+                                        <span class="badge badge-success">{{$e}}</span>
+
+                                        @endforeach</td>
+
+
+
+                                    <td>
+                                        @foreach($question->getAllExperience() as $e)
 
                                         <span class="badge badge-success">{{$e}}</span>
 
@@ -112,22 +122,22 @@ height: auto !important;
                                     <td>
 
                                         <a href="{{route('question.show', $question->id)}}" title="View Question"
-                                            class="btn btn-outline-success">
+                                            class="btn btn-outline-success btn-sm">
 
                                             <i class="fa fa-eye"></i>
 
                                         </a>
 
                                         <a href="{{route('question.edit',$question->id)}}" title="Edit Question"
-                                            class="btn btn-outline-success">
+                                            class="btn btn-outline-success btn-sm">
 
                                             <i class="fa fa-edit"></i>
 
                                         </a>
 
-                                        <a href="{{route('question.delete_question',$question->id)}}"
+                                        <a href="{{route('question.delete', $question->id)}}"
                                             onClick="return confirm('Are you sure?')" title="Delete Question"
-                                            class="btn btn-outline-danger">
+                                            class="btn btn-outline-danger btn-sm">
 
                                             <i class="fa fa fa-fw fa-trash"></i>
 
@@ -157,5 +167,23 @@ height: auto !important;
 
 
 
+@endsection
+
+@section('scripts')
+<script src="{{ asset('admin-asset/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+
+
+
+<script src="{{ asset('admin-asset/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+    $("#dataTable").DataTable({
+        aoColumnDefs: [{
+            bSortable: false,
+            aTargets: ["sortoff"]
+        }]
+    });
+});
+</script>
 @endsection
 

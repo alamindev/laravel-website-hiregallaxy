@@ -10,7 +10,7 @@
 
 					<h1 class="footer-title text-capitalize">Company</h1>
 
-					 
+
 					<ul class="footer-links">
 
 						<li>
@@ -24,11 +24,11 @@
 							<a href="{{ route('contacts') }}"> Contact us</a>
 
 						</li>
-						
+
 
 						</ul>
 
-					</div> 
+					</div>
 				<div class="col-md-3">
 
 					<h1 class="footer-title text-capitalize">Terms</h1>
@@ -46,11 +46,11 @@
 							<a href="{{ route('privacy') }}"> Privacy Policy</a>
 
 						</li>
-						
+
 
 						</ul>
 
-				</div> 
+				</div>
 				<div class="col-md-3">
 
 					<h1 class="footer-title text-capitalize">Customer</h1>
@@ -61,8 +61,8 @@
 
 							<a href="{{ route('testimonial') }}">  Testimonials</a>
 
-						</li> 
-				
+						</li>
+
 					</ul>
 
 				</div>
@@ -95,7 +95,7 @@
 
 </section>
 
- 
+
 <!-- Apply Job Modals -->
 
 @include('frontend.partials.apply-job-modal')
@@ -104,6 +104,31 @@
 
 <!-- Apply Job Modals -->
 
+@auth
+@if(auth()->user()->is_company == 0)
+@if((auth()->user()->is_company == 0 && auth()->user()->candidate->user_id) || count(auth()->user()->experiences) > 0 || count(auth()->user()->qualifications) > 0 || count(auth()->user()->awards) > 0 || count(auth()->user()->skills)  > 0 || count(auth()->user()->portfolios) > 0)
+
+<div class="modal animated fadeIn" id="alertmodal">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+		<div class="modal-content">
+			<div class="modal-header d-flex justify-content-end" style="width: 100%;">
+					<button type="button" class="close ml-2" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+                <h2 class="text-center">Please Update Your Profile</h2>
+              <div class="d-flex justify-content-center align-items-center">
+                <a class="btn btn-info mt-3" href="{{ route('candidates.show', auth()->user()->username) }}">Go to profile</a>
+                <button id="remember-later"  class="btn btn-primary ml-2 mt-3"  >Remember Later</button>
+              </div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+@endif
+@endif
+@endauth
 
 
 
@@ -115,8 +140,8 @@
 </div>
 
 
-<section class="footer-bottom-section">  
-		<div class="container"> 
+<section class="footer-bottom-section">
+		<div class="container">
 		<div class="footer--new">
 			<p>&copy; {{ date('Y') }} Joblrs, All rights reseved </p>
 			<p>Design by Joblrs</p>

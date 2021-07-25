@@ -12,7 +12,6 @@ $(function() {
         $("#sidebar").addClass("active");
         $("#sidebar_btn").addClass("btn-close");
         $("#sidebar_close").addClass("btn-active");
-        $(".control__nav").addClass("control__item");
     });
     $("#sidebar_close").click(function() {
         $("#sidebar").removeClass("active");
@@ -20,7 +19,6 @@ $(function() {
         $("#sidebar_btn").removeClass("btn-close");
         $("#sidebar_btn").addClass("btn-active");
         $("#sidebar_close").removeClass("btn-active");
-        $(".control__nav").removeClass("control__item");
     });
 
     $(".custom__search_bar .dropdown-item").click(function() {
@@ -542,12 +540,12 @@ $(function() {
     });
     $(document).on("click", function(e) {
         if (
-            $(e.target)
+            jQuery(e.target)
             .closest(".search__form")
             .find(".advanced__search_btn")
             .attr("class") != "advanced__search_btn"
         ) {
-            $(".advanced__seach_show").slideUp();
+            jQuery(".advanced__seach_show").slideUp();
         }
     });
 });

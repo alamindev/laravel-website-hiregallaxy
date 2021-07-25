@@ -4,6 +4,8 @@ window.onscroll = function() {
     scrollFunction();
 };
 
+
+
 function scrollFunction() {
     if (
         document.body.scrollTop > 20 ||
@@ -305,11 +307,11 @@ $("#btnSave").click(function(e){
     var token = $("input[name=_token]").val();
     if(email){
         $.ajax({
-    
+
             type:'POST',
             url:'/store-subscribe',
             headers: {
-                'X-CSRF-Token': token 
+                'X-CSRF-Token': token
             },
             data:{email:email},
             success:function(data){
@@ -326,5 +328,5 @@ $("#btnSave").click(function(e){
     }else{
         alert('Please Enter Email !');
     }
-    
+
 });

@@ -325,29 +325,13 @@ Post New Job | {{ App\Models\Setting::first()->site_title }}
 							</div>
 
 							<div class="form-row w-100 px-1">
-								<div class="col-md-10 form-group">
+								<div class="col-md-12 form-group">
 
-									<label for="skill">	<strong>Skill</strong></span>
+									<label for="skill">	<strong>Skill</strong> <span class="text-danger">Please enter skill by comma (,) </span>
 
 									</label>
 
-									<select multiple name="skills[]" id="skill" class="form-control skill_job_post" disabled>
-
-										  @foreach ($skills as $skill)
-
-										<option value="{{ $skill->id }}">{{ $skill->name }}</option>
-
-										@endforeach
-
-									</select>
-
-								</div>
-								<div class="col-md-2 d-flex align-items-center">
-									<div class="button-switch mt-4 ml-4">
-										<input type="checkbox" id="switch-blue" name="job_skill_check" class="switch job__skill_onoff" />
-										<label for="switch-blue" class="lbl-off">Off</label>
-										<label for="switch-blue" class="lbl-on">On</label>
-									  </div>
+									 <input type="text" name="skills" class="form-control">
 
 								</div>
 							</div>
@@ -727,7 +711,7 @@ Post New Job | {{ App\Models\Setting::first()->site_title }}
 
 									</label>
 
-									<input type="text" autocomplete="off" name="deadline" class="form-control"
+									<input type="date" autocomplete="off" name="deadline" class="form-control"
 
 										id="deadline" placeholder="Write application deadline" required>
 

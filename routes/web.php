@@ -81,10 +81,10 @@ Route::group(['prefix' => 'employers'], function () {
         Route::get('/dashboard', 'Frontend\EmployersController@dashboard')->name('employers.dashboard');
 
         // Change password
-        
+
         Route::post('/employer-password-change', 'Frontend\EmployersController@passwordChangeUpdate')->name('employers.password-change');
         Route::get('/employer-change-password', 'Frontend\EmployersController@changePassword')->name('employers.change-password');
-        
+
 
         Route::get('/applicants', 'Frontend\EmployersController@applicants')->name('employers.applicants');
 
@@ -124,6 +124,18 @@ Route::group(['prefix' => 'employers'], function () {
             Route::get('/delete/{id}', 'Frontend\CompanyController@destroy')->name('company.delete');
         });
     });
+
+    Route::post('question/{id}', 'Frontend\QuestionController@update')->name('que.update');
+
+    Route::get('delete_question/{question_id}', 'Frontend\QuestionController@delete_question')->name('question.delete');
+
+    Route::post('/questions/uploads', "Frontend\QuestionController@upload");
+
+    Route::get('question/file_browser', "Frontend\QuestionController@fileBrowser");
+
+    Route::get('question/view/{id}', 'Frontend\QuestionController@show')->name('question.show');
+
+    Route::resource('question', 'Frontend\QuestionController');
 });
 
 Route::group(['prefix' => 'team'], function () {
@@ -158,13 +170,13 @@ Route::group(['prefix' => 'candidates'], function () {
     Route::get('/search', 'Frontend\CandidatesController@search')->name('candidates.search');
 
     Route::group(['middleware' => ['checkCandidate']], function () {
-        
+
         // Change password
-        
+
         Route::post('/password-change', 'Frontend\CandidatesController@passwordChangeUpdate')->name('candidates.password-change');
-        
+
         Route::get('/change-password', 'Frontend\CandidatesController@changePassword')->name('candidates.change-password');
-        
+
         // Experience
 
         Route::post('/add-experience', 'Frontend\ExperiencesController@store')->name('candidates.experience.store');
@@ -244,7 +256,7 @@ Route::group(['prefix' => 'candidates'], function () {
         Route::get('/favorite-jobs', 'Frontend\CandidatesController@favoriteJobs')->name('candidates.jobs.favorite');
 
         Route::get('/applied-jobs', 'Frontend\CandidatesController@appliedJobs')->name('candidates.jobs.applied');
-        
+
     });
 
 });
@@ -288,20 +300,19 @@ Route::group(['prefix' => 'jobs'], function () {
      * start route quiz or online exam
 
      */
+});
 
-    Route::group(['prefix' => 'exam'], function () {
+Route::group(['prefix' => 'exam'], function () {
 
-        Route::get('/home/{id}', 'Frontend\ExamController@index')->name('exam');
+    Route::get('/home/{id}', 'Frontend\ExamController@index')->name('exam');
 
-        Route::get('/questions/{id}', 'Frontend\ExamController@questions');
+    Route::get('/questions/{id}', 'Frontend\ExamController@questions');
 
-        Route::get('/check-skill', 'Frontend\ExamController@checkSkill');
+    Route::get('/check-skill', 'Frontend\ExamController@checkSkill');
 
-        Route::post('/questions/results/final', 'Frontend\ExamController@Results');
+    Route::post('/questions/results/final', 'Frontend\ExamController@Results');
 
-        Route::get('/check-exam-status', 'Frontend\ExamController@examStatus');
-
-    });
+    Route::get('/check-exam-status', 'Frontend\ExamController@examStatus');
 
 });
 
@@ -466,8 +477,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/active/{id}', 'Backend\CategoryController@active')->name('category.active')->middleware('role:super-admin,admin');
 
     });
-    
-    
+
+
     /**
 
      * Sponsor Routes
@@ -488,8 +499,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 
     });
-    
-    
+
+
     /**
 
      * Subscriber
