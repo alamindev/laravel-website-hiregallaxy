@@ -37,6 +37,13 @@ class Question extends Model
         return $this->hasOne('App\Models\Answers', 'question_id', 'id');
 
     }
+    public function user()
+
+    {
+
+        return $this->belongsTo('App\User', 'user_id', 'id');
+
+    }
 
     public function getAllSkill()
 

@@ -91,54 +91,6 @@
 
 					</div>
 
-					<div class="row form-group">
-
-						<div class="col-md-8">
-
-							<label for="cover_letter">Curriculam Vitae
-
-								<span class="text-muted font12">Upload your curriculam vitae, Max size: 2MB (only pdf)
-
-									<span id="oldApplyCV"></span>
-
-								</span>
-
-							</label>
-
-							<input type="file" class="form-control" name="cv_file" id="cover_letter_cv_update">
-
-						</div>
-
-						@if (Auth::check())
-
-						@if (Auth::user()->is_company == 0)
-
-						@if (Auth::user()->candidate && Auth::user()->candidate->cv != null)
-
-						<div class="col-md-4">
-
-							<label for="cover_letter">Use Profile CV
-
-							</label>
-
-							<br>
-
-							<input type="checkbox" name="use_profile_cv" id="use_profile_cv_update" value="1"
-
-								class="ml-3" />
-
-						</div>
-
-						@endif
-
-						@endif
-
-						@endif
-
-
-
-					</div>
-
 					<div class="form-group">
 
 						<div class="form-check">

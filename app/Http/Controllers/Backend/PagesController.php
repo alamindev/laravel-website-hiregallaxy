@@ -16,6 +16,7 @@ use App\Models\Experience;
 use App\Models\Sector;
 use App\Models\Segment;
 use App\Models\Admin;
+use App\Models\Sponsor;
 use Auth;
 use Hash;
 use App\Models\Template;
@@ -46,7 +47,9 @@ class PagesController extends Controller
     $segments = count(Segment::select('id')->get());
     $sectors = count(Sector::select('id')->get());
     $admins = count(Admin::select('id')->get());
-    return view('backend.pages.index', compact('admins','jobs', 'categories', 'employers', 'candidates', 'skills', 'experiences', 'templates', 'cities', 'crawlers', 'disciplines', 'segments', 'sectors'));
+    $admins = count(Admin::select('id')->get());
+    $sponsor = count(Sponsor::get());
+    return view('backend.pages.index', compact('admins','jobs', 'categories', 'employers', 'candidates', 'skills', 'experiences', 'templates', 'cities', 'crawlers', 'disciplines', 'segments', 'sectors','sponsor'));
   }
 
 
@@ -77,7 +80,7 @@ class PagesController extends Controller
     $admin->save();
 
     return redirect()->back()->with(['success' => 'Password changed successfully']);
-    
+
 
   }
 }

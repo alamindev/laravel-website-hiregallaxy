@@ -57,8 +57,6 @@
 
 							<th style="padding:5px 22px 10px 6px !important">Aptitude</th>
 
-							<th style="padding:5px 22px 10px 6px !important">CV</th>
-
 							<th style="padding:5px 22px 10px 6px !important" class="sortoff">Cover Letter</th>
 
 							<th style="padding:5px 22px 10px 6px !important">Status</th>
@@ -166,21 +164,7 @@ $personality = \App\Models\Personality::where('title', '=', $personality_res['pe
 
 								@endif
 
-								<td>
 
-								@if ($application->cv != null)
-
-								<a href="{{ $application->cv }}" target="_blank"><i
-
-									class="fa fa-download"></i> Download</a>
-
-									@else
-
-									--
-
-									@endif
-
-								</td>
 
 								<td>
 

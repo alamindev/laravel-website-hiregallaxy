@@ -30,7 +30,9 @@ height: auto !important;
     <div class="main-body">
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
+            <div class="alert alert-danger">
+                Note: To work skill test, please enter 30 questions per position
+            </div>
             <div class="card mb-3">
 
                 <div class="card-header py-3">
@@ -76,6 +78,7 @@ height: auto !important;
                                     <th width="10%">Position</th>
 
                                     <th width="15%">Experience</th>
+                                    <th width="10%">Editor</th>
                                     <th width="15%" class="sortoff">Manage</th>
 
                                 </tr>
@@ -116,8 +119,7 @@ height: auto !important;
                                         <span class="badge badge-success">{{$e}}</span>
 
                                         @endforeach</td>
-
-
+                                    <td>{{ $question->user->email }}</td>
 
                                     <td>
 

@@ -103,7 +103,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								@php
 
-								$result = \App\Models\Result::where('job_acitvity_id', $application->id)->where('user_id', $application->user_id)->first();
+								$result = \App\Models\Result::where('job_activity_id', $application->id)->where('user_id', $application->user_id)->first();
 
 								@endphp
 
@@ -162,8 +162,7 @@ Total Applications | {{ App\Models\Setting::first()->site_title }}
 
 								@else
 
-								<td>Completed</td>
-								{{-- <td>{{$apt['result']}}</td> --}}
+								<td>{{$apt['result']}}</td>
 
 								@endif
 

@@ -9,7 +9,7 @@
                 {{ $status }} Applicants
 
             </h5>
- 
+
             @if(count($applicant) > 0)
             <div class="table-responsive">
                 <table class="table table-hover table-striped col-sm-12" id="dataTable" style="font-size: 13px !important">
@@ -25,8 +25,6 @@
                         <th style="padding:5px 22px 10px 6px !important">Personality</th>
 
                         <th style="padding:5px 22px 10px 6px !important">Aptitude</th>
-
-                        <th style="padding:5px 22px 10px 6px !important">CV</th>
 
                         <th style="padding:5px 22px 10px 6px !important">Cover Letter</th>
 
@@ -44,7 +42,7 @@
 
                             <td>
 
-                            @php 
+                            @php
 
                             $cand = \App\Models\CandidateProfile::where('user_id', $application->user_id)->first();
 
@@ -61,7 +59,7 @@
                             </td>
 
                             <td>
-                                
+
                                 @php
 
                                 $getJob = \App\Models\Job::where('id', $application->job_id)->first();
@@ -72,31 +70,32 @@
 
                             </td>
 
-                            @php 
+                            @php
 
                             $result = \App\Models\Result::where('job_id', $application->job_id)->where('user_id', $application->user_id)->first();
 
                             @endphp
 
-                            @if($result != null) 
+                            @if($result != null)
 
-                            <td>{{ $result->result }}</td>  
+                            <td>{{ $result->result }}</td>
 
                             @else
 
-                            <td>---</td>
+                            <td>   <button class="btn btn-success assin_modal" data-id="{{ $application->id }}">Assign</button></td>
 
                             @endif
 
 
 
-                            @php 
+                            @php
 
                             $personality_result = \App\Models\PersonalityResult::where('user_id', $application->user_id)->first();
 
-                            $personality = \App\Models\Personality::where('title', '=', $personality_result['personality_result'])
-
-                            ->select('id','sub_title')->first(); 
+                            $personality = '';
+                            if(!empty($personality_result)){
+                                $personality = \App\Models\Personality::where('title', '=', $personality_result['personality_result'])->select('id','sub_title')->first();
+                            }
 
                             @endphp
 
@@ -104,13 +103,13 @@
 
                             <td>---</td>
 
-                            @else 
+                            @else
 
                             <td>{{$personality['sub_title']}}
 
-                                <div class="d-flex justify-content-center"> 
+                                <div class="d-flex justify-content-center">
 
-                                    <a href="{{ route('public.personality', $application->user_id)}}" class="mt-1 text-center btn-sm btn btn-outline-yellow"> <i class="fa fa-eye"></i> view</a> 
+                                    <a href="{{ route('public.personality', $application->user_id)}}" class="mt-1 text-center btn-sm btn btn-outline-yellow"> <i class="fa fa-eye"></i> view</a>
 
                                 </div>
 
@@ -118,9 +117,9 @@
 
                             @endif
 
-                            @php 
+                            @php
 
-                            $apt = \App\Models\AptitudeResult::where('user_id', $application->user_id)->first(); 
+                            $apt = \App\Models\AptitudeResult::where('user_id', $application->user_id)->first();
 
                             @endphp
 
@@ -128,27 +127,13 @@
 
                             <td>---</td>
 
-                            @else 
+                            @else
 
                             <td>{{$apt['result']}}</td>
 
                             @endif
 
-                            <td>
 
-                            @if ($application->cv != null)
-
-                            <a href="{{ $application->cv }}" target="_blank"><i
-
-                                class="fa fa-download"></i> Download</a>
-
-                                @else
-
-                                --
-
-                                @endif
-
-                            </td>
 
                             <td>
 
@@ -236,17 +221,17 @@
 
                 </table>
             </div>
-            @else 
+            @else
             <div class="d-flex justify-content-center">
                 <p class="mt-4">
-        
+
                     <span class="alert alert-danger">
-            
+
                         Sorry !! No data found !!
-            
+
                     </span>
-            
-                </p> 
+
+                </p>
             </div>
             @endif
         </div>

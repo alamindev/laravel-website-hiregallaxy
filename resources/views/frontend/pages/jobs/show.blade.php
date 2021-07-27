@@ -181,6 +181,18 @@
 
 										@endif
 
+										{{-- @if (!is_null($job->category))
+
+										<div class="col-12">
+
+											<strong>Position: </strong>
+
+											{{ !is_null($job->category) ? $job->category->name : '--' }}
+
+										</div>
+
+										@endif --}}
+
 
 
 										@if (!is_null($job->discipline))

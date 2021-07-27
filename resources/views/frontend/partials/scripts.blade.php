@@ -34,21 +34,20 @@
     })
 </script>
 @auth
-@if(auth()->user()->is_company == 0)
+@if(auth()->check() && auth()->user()->is_company == 0)
 <script>
     $(function () {
-        jQuery.noConflict();
-        var cookieValue = jQuery.cookie("remember-popup");
+        var cookieValue = $.cookie("remember-popup");
 
         if(cookieValue != 'true'){
             window.setTimeout(function(){
-                jQuery("#alertmodal").modal('show');
+                $("#alertmodal").modal('show');
             },5000);
         }
 
-        jQuery('#remember-later').click(function () {
-            jQuery.cookie("remember-popup", true, { expires : 1 });
-            jQuery("#alertmodal").modal('hide');
+        $('#remember-later').click(function () {
+            $.cookie("remember-popup", true, { expires : 1 });
+            $("#alertmodal").modal('hide');
         })
     })
 </script>

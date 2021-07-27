@@ -28,17 +28,21 @@
 
 				style="width: 140px;margin-top: 0px;" class="float-left" />
 			</a>
-		</div>
-        @if(Route::currentRouteName() != 'index' && Route::currentRouteName() != 'jobs' && Route::currentRouteName() != 'jobs.show')
-		  <div class="sidebar" id="sidebar">
-		  <a href="{{ route('employers.dashboard') }}"><i class="fa fa-desktop"></i><span>Dashboard</span></a>
-		  <a href="{{ route('employers.jobs.posted') }}"><i class="fa fa-bell"></i><span>My Posted Job</span></a>
-		  <!-- <a href="{{ route('employers.applicants') }}"><i class="fa fa-users"></i><span>Applicants</span></a> -->
-		  <a href="{{ route('employers.search.candidates') }}"><i class="fa fa-search"></i><span>Search Cadidates</span></a>
-		  <a href="{{ route('messages') }}"><i class="fa fa-envelope"></i><span>Messages</span></a>
 
-		  <a href="{{ route('employers.show', Auth::user()->username) }}"><i class="fa fa-edit"></i><span>Edit My Profile</span></a>
-          <a href="{{ route('question.index') }}"><i class="fa fa-question-circle"></i><span>Questions</span></a>
+		</div>
+        @if(Route::currentRouteName() != 'index' && Route::currentRouteName() != 'jobs' && Route::currentRouteName() != 'jobs.show' && Route::currentRouteName() != 'employers'
+        && Route::currentRouteName() != 'employers.show' && Route::currentRouteName() != 'candidates' && Route::currentRouteName() != 'candidates.show' && Route::currentRouteName() != 'terms' && Route::currentRouteName() != 'about_us' && Route::currentRouteName() != 'contacts' && Route::currentRouteName() != 'privacy' && Route::currentRouteName() != 'testimonial' && Route::currentRouteName() != 'description' && Route::currentRouteName() != 'jobDescription' && Route::currentRouteName() != 'jobs.categories.show' && Route::currentRouteName() != 'jobs.search' && Route::currentRouteName() != 'description.search' && Route::currentRouteName() != 'candidates.search' && Route::currentRouteName() != 'employers.search' && Route::currentRouteName() != 'searches'
+
+        )
+		  <div class="sidebar" id="sidebar">
+		  <a href="{{ route('employers.dashboard') }}" class="@if(Route::currentRouteName() == 'employers.dashboard') sidebar--active @endif"><i class="fa fa-desktop"></i><span>Dashboard</span></a>
+		  <a href="{{ route('employers.jobs.posted') }}" class="@if(Route::currentRouteName() == 'employers.jobs.posted') sidebar--active @endif"><i class="fa fa-bell"></i><span>My Posted Job</span></a>
+		  <!-- <a href="{{ route('employers.applicants') }}"><i class="fa fa-users"></i><span>Applicants</span></a> -->
+		  <a href="{{ route('employers.search.candidates') }}" class="@if(Route::currentRouteName() == 'employers.search.candidates') sidebar--active @endif"><i class="fa fa-search"></i><span>Search Cadidates</span></a>
+		  <a href="{{ route('messages') }}" class="@if(Route::currentRouteName() == 'messages') sidebar--active @endif"><i class="fa fa-envelope"></i><span>Messages</span></a>
+
+		  <a href="{{ route('employers.show', Auth::user()->username) }}" class="@if(Route::currentRouteName() == 'employers.show') sidebar--active @endif"><i class="fa fa-edit"></i><span>Edit My Profile</span></a>
+          <a href="{{ route('question.index') }}" class="@if(Route::currentRouteName() == 'question.index') sidebar--active @endif"><i class="fa fa-question-circle"></i><span>Questions</span></a>
 		</div>
         @endif
 		@else

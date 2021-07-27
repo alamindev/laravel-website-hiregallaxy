@@ -7,13 +7,14 @@
 
 <!-- Font Awesome CSS -->
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-<link rel="stylesheet" href="{{ asset('css/font-awesome/font-awesome.min.css') }}">
 <!-- Bootstrap Select Picker -->
 <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-select.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('css/font-awesome/font-awesome.min.css') }}">
 <!-- Animate CSS -->
 <link rel="stylesheet" href="{{ asset('css/animate/animate.min.css') }}">
 <!-- Parsley -->
-<link rel="stylesheet" href="{{ asset('css/parsley/parsley.css') }}?v={{ config('constants.asset_version') }}">
+<link rel="stylesheet" href="{{ asset('css/parsley/parsley.css') }}">
 <!-- Noty -->
 <link rel="stylesheet" href="{{ asset('css/noty/noty.css') }}">
 <!-- Jquery UI -->

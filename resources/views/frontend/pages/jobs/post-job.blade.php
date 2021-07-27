@@ -132,7 +132,7 @@ Post New Job | {{ App\Models\Setting::first()->site_title }}
 
 	<div class="container">
 
-		<div class="">
+		<div class="pb-5">
 
 			<div class="row justify-content-center">
 
@@ -711,7 +711,7 @@ Post New Job | {{ App\Models\Setting::first()->site_title }}
 
 									</label>
 
-									<input type="date" autocomplete="off" name="deadline" class="form-control"
+									<input type="text" autocomplete="off" name="deadline" class="form-control"
 
 										id="deadline" placeholder="Write application deadline" required>
 
@@ -917,17 +917,18 @@ Post New Job | {{ App\Models\Setting::first()->site_title }}
 
 <script>
 
-	$(function() {
+jQuery(function() {
 		var year = (new Date).getFullYear();
 	var month = (new Date).getMonth();
 	var date = (new Date).getDate();
-		$( "#deadline" ).datepicker({
-		format: 'YYYY-MM-DD',
-		minDate: new Date(year, month,date),
-		changeMonth: true,
-      changeYear: true
 
-	});
+		jQuery( "#deadline" ).datepicker({
+            format: 'YYYY-MM-DD',
+            minDate: new Date(year, month,date),
+            changeMonth: true,
+            changeYear: true
+
+	    });
 
 	});
 

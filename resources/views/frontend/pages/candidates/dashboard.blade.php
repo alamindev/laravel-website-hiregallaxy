@@ -268,7 +268,7 @@ Candidate Dashboard | {{ App\Models\Setting::first()->site_title }}
                     <div class="clear"></div>
 					@if(!empty($personality))
 
-						<div class="mt-3">
+						<div class="mt-5">
 
 							<div class="row">
 

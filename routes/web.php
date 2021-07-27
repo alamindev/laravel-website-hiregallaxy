@@ -31,12 +31,12 @@
 |
 
  */
-
 Route::get('/clear', function() {
     $exitCode = Artisan::call('cache:clear');
     $exitCode = Artisan::call('view:clear');
     $exitCode = Artisan::call('config:cache');
     $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('route:clear');
     echo 'Done';
 });
 
@@ -245,7 +245,7 @@ Route::group(['prefix' => 'candidates'], function () {
 
             Route::get('/questions/{id}', 'Frontend\AptitudeResultController@questions');
 
-            Route::post('/questions/results', 'Frontend\AptitudeResultController@Results');
+            Route::post('/result', 'Frontend\AptitudeResultController@Results');
 
             Route::get('/check-status', 'Frontend\AptitudeResultController@examStatus');
 
@@ -793,3 +793,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::get('messages', 'Frontend\MessageController@messages')->name('messages');
 Route::get('message/{id}', 'Frontend\MessageController@message')->name('message');
 Route::get('chat/{id}', 'Frontend\MessageController@startChat')->name('chat');
+
+

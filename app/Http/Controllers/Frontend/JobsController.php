@@ -884,7 +884,7 @@ class JobsController extends Controller
 
             'expected_salary' => 'nullable|numeric',
 
-            'cv_file' => 'nullable|mimes:pdf|max:2000',
+            // 'cv_file' => 'nullable|mimes:pdf|max:2000',
 
         ]);
 
@@ -919,37 +919,37 @@ class JobsController extends Controller
 
         }
 
-        if (isset($request->use_profile_cv)) {
+        // if (isset($request->use_profile_cv)) {
 
-            if (Auth::user()->candidate->cv != null) {
+        //     if (Auth::user()->candidate->cv != null) {
 
-                $cv = Auth::user()->candidate->cv;
+        //         $cv = Auth::user()->candidate->cv;
 
-            } else {
+        //     } else {
 
-                $cv = null;
+        //         $cv = null;
 
-            }
+        //     }
 
-        } else {
+        // } else {
 
-            // If there is any uploaded CV
+        //     // If there is any uploaded CV
 
-            $cv_file = UploadHelper::upload('cv_file', $request->file('cv_file'), time(), 'files/cv');
+        //     $cv_file = UploadHelper::upload('cv_file', $request->file('cv_file'), time(), 'files/cv');
 
-            if (!is_null($cv_file)) {
+        //     if (!is_null($cv_file)) {
 
-                $cv = url('/') . '/files/cv/' . $cv_file;
+        //         $cv = url('/') . '/files/cv/' . $cv_file;
 
-            } else {
+        //     } else {
 
-                $cv = null;
+        //         $cv = null;
 
-            }
+        //     }
 
-        }
+        // }
 
-        $jobActivity->cv = $cv;
+        // $jobActivity->cv = $cv;
 
         $jobActivity->save();
 
@@ -988,7 +988,7 @@ class JobsController extends Controller
 
             'expected_salary' => 'nullable|numeric',
 
-            'cv_file' => 'nullable|mimes:pdf|max:2000',
+            // 'cv_file' => 'nullable|mimes:pdf|max:2000',
 
         ]);
 
@@ -1018,45 +1018,45 @@ class JobsController extends Controller
 
         }
 
-        if (isset($request->use_profile_cv)) {
+        // if (isset($request->use_profile_cv)) {
 
-            if (Auth::user()->candidate->cv != null) {
+        //     if (Auth::user()->candidate->cv != null) {
 
-                $cv = Auth::user()->candidate->cv;
+        //         $cv = Auth::user()->candidate->cv;
 
-            } else {
+        //     } else {
 
-                $cv = null;
+        //         $cv = null;
 
-            }
+        //     }
 
-        } else {
+        // } else {
 
-            // If there is any uploaded CV
+        //     // If there is any uploaded CV
 
-            // Delete the existing File
+        //     // Delete the existing File
 
-            if (file_exists($jobActivity->cv)) {
+        //     if (file_exists($jobActivity->cv)) {
 
-                unlink($jobActivity->cv);
+        //         unlink($jobActivity->cv);
 
-            }
+        //     }
 
-            $cv_file = UploadHelper::upload('cv_file', $request->file('cv_file'), time(), 'files/cv');
+        //     $cv_file = UploadHelper::upload('cv_file', $request->file('cv_file'), time(), 'files/cv');
 
-            if (!is_null($cv_file)) {
+        //     if (!is_null($cv_file)) {
 
-                $cv = url('/') . '/files/cv/' . $cv_file;
+        //         $cv = url('/') . '/files/cv/' . $cv_file;
 
-            } else {
+        //     } else {
 
-                $cv = null;
+        //         $cv = null;
 
-            }
+        //     }
 
-        }
+        // }
 
-        $jobActivity->cv = $cv;
+        // $jobActivity->cv = $cv;
 
         $jobActivity->save();
 

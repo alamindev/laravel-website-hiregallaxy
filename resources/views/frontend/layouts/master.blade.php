@@ -31,7 +31,10 @@
 		@include('frontend.partials.messages')
 		@endif
 		<!-- Page -->
-		<div class="page-area home-page @if(auth()->user()->is_company == 1)  @if(Route::currentRouteName() != 'index' && Route::currentRouteName() != 'jobs' && Route::currentRouteName() != 'jobs.show') page-sidebar-area @endif @endif">
+		<div class="page-area home-page @if(auth()->check() && auth()->user()->is_company == 1)    @if(Route::currentRouteName() != 'index' && Route::currentRouteName() != 'jobs' && Route::currentRouteName() != 'jobs.show' && Route::currentRouteName() != 'employers'
+            && Route::currentRouteName() != 'employers.show' && Route::currentRouteName() != 'candidates' && Route::currentRouteName() != 'candidates.show' && Route::currentRouteName() != 'terms' && Route::currentRouteName() != 'about_us' && Route::currentRouteName() != 'contacts' && Route::currentRouteName() != 'privacy' && Route::currentRouteName() != 'testimonial' && Route::currentRouteName() != 'description' && Route::currentRouteName() != 'jobDescription' && Route::currentRouteName() != 'jobs.categories.show' && Route::currentRouteName() != 'jobs.search' && Route::currentRouteName() != 'description.search' && Route::currentRouteName() != 'candidates.search' && Route::currentRouteName() != 'employers.search' && Route::currentRouteName() != 'searches'
+
+            ) page-sidebar-area @endif @endif">
 			@yield('content')
 		</div>
 		<!-- Page -->

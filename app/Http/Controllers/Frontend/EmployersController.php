@@ -21,6 +21,7 @@ use App\Models\PersonalityResult;
 use App\Models\Result;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -247,15 +248,15 @@ class EmployersController extends Controller
         // $user = Auth::user();
 
         $userData = DB::table('job_activities')->where('id', $id)->first();
-        
+
         if($userData){
-            
+
             $user_id = $userData->user_id;
             $user = User::find($user_id);
             $data['name'] = $name = $user->name;
             $data['email'] = $email = $user->email;
             $data['username'] = $username = $user->username;
-                    
+
             $jobId = $userData->job_id;
             $jobs = DB::table('jobs')->where('id', $jobId)->first();
 
@@ -263,7 +264,7 @@ class EmployersController extends Controller
             $user['title'] = $jobs->title;
             $user['slug'] = $jobs->slug;
             $user['status'] = $request->status;
-            
+
             $user->notify(new StatusEmail($user));
         }
 
@@ -369,9 +370,9 @@ class EmployersController extends Controller
 
             'category_id' => $request->category_id,
 
-            'establish_date' => $request->establish_date,
+            'establish_date' => Carbon::parse($request->establish_date)->format('Y-m-d'),
 
-            'establish_year' => substr($request->establish_date, 0, 4),
+            'establish_year' => Carbon::parse($request->establish_date)->format('Y'),
 
             'team_member' => $request->team_member,
 
@@ -1170,7 +1171,7 @@ end
         }
 
     }
-    
+
 
     public function changePassword()
     {
@@ -1209,7 +1210,7 @@ end
 
     public function passwordChangeUpdate(Request $request)
     {
-    
+
         if (!Auth::check()) {
 
             session()->flash('error', 'Sorry   You are not an authenticated Employer  ');
@@ -1218,7 +1219,7 @@ end
 
         }
 
-    
+
         $this->validate($request, [
 
             'new_password' => 'required|min:8',
@@ -1227,7 +1228,7 @@ end
 
         ]);
 
-        
+
         $user = Auth::user();
 
         $user_id = $user->id;
@@ -1260,12 +1261,12 @@ end
             {
                 session()->flash('error', 'No data found !');
             }
-            
+
             return back();
         }
 
     }
-    
-    
+
+
 
 }

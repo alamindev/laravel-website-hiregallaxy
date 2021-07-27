@@ -40,11 +40,11 @@
 
 							<label for="expected_salary" class="d-flex">Expected Salary <span class="required">*</span>
 
-								<input type="checkbox" class="salary_negotiable"  name="is_salary_negotiable" id="is_salary_negotiable" value="1"
+								<input type="checkbox" class="salary_negotiable"  name="is_salary_negotiable" id="is_salary_negotiable_update"
 
-									class="ml-3" />
+									value="1" class="ml-3" />
 
-								<span class="font12 ml-2"><label for="is_salary_negotiable">(Salary
+								<span class="font12 ml-2"><label for="is_salary_negotiable_update ">(Salary
 
 										Negotiable)</label></span>
 
@@ -53,14 +53,16 @@
 							<div class="row">
 
 								<div class="col-md-6 pr-0">
-									<input type="number" class="form-control expected_salary" id="expected_salary"
-										name="expected_salary"   data-parsley-required-message="Please fill your expected salary"  placeholder="Your Expected Salary" min="0" required>
+
+									<input type="number" class="form-control expected_salary" id="expected_salary_update"
+
+										name="expected_salary" data-parsley-required-message="Please fill your expected salary" placeholder="Your Expected Salary" min="0" required>
 
 								</div>
 
 								<div class="col-md-6 pl-0">
 
-									<input type="text" id="jobApplyCurrency" value="CAD" disabled>
+									<input type="text" id="jobApplyCurrencyUpdate" value="CAD" disabled>
 
 								</div>
 
@@ -90,49 +92,6 @@
 
 					</div>
 
-					<div class="row form-group">
-
-						<div class="col-md-8">
-
-							<label for="cover_letter">Curriculam Vitae
-
-								<span class="text-muted font12">Upload your curriculam vitae, Max size: 2MB (only
-
-									pdf)</span>
-
-							</label>
-
-							<input type="file" class="form-control"   name="cv_file" id="cover_letter_cv">
-
-						</div>
-
-						@if (Auth::check())
-
-						@if (Auth::user()->is_company == 0)
-
-						@if (Auth::user()->candidate && Auth::user()->candidate->cv != null)
-
-						<div class="col-md-4">
-
-							<label for="cover_letter">Use Profile CV
-
-							</label>
-
-							<br>
-
-							<input type="checkbox" name="use_profile_cv" id="use_profile_cv" value="1" class="ml-3" />
-
-						</div>
-
-						@endif
-
-						@endif
-
-						@endif
-
-
-
-					</div>
 
 					<div class="form-group">
 

@@ -1302,3 +1302,36 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 .em_pb_50{padding-bottom: 50px;}
 .pd-t-40{padding-top: 40px !important;}
+
+
+.show-href {
+    display: none;
+}
+.show-href.active-href{
+    display: flex;
+    align-items: center;
+}
+.custom-link{
+    background: #efefef;
+    padding: 10px;
+    border-radius: 10px;
+}
+.copy-btn  {
+	background: #4f9bed;
+	padding: 8px 12px;
+	border-radius: 10px;
+    cursor: pointer;
+}
+.copy-btn i {
+    font-size: 18px;
+    color: white;
+}
+
+@media screen and (min-width: 991px ) {
+    .control__nav {
+        margin-left: 180px !important;
+    }
+}
+.sidebar--active {
+	background: #007bff;
+}

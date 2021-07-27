@@ -91,6 +91,9 @@ class ExamController extends Controller
 
                 if (count($questions) >= 30) {
 
+                    $questions = collect($questions);
+                    $questions = $questions->random(30);
+
                     $data = [];
 
                     for ($i = 0; $i < count($questions); $i++) {

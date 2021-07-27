@@ -1,1 +1,27 @@
-<?phpnamespace App\Models;use Illuminate\Database\Eloquent\Model;use Illuminate\Support\Facades\DB;class Sponsor extends Model{	protected $fillable = [		'link', 		'image'	];}
+<?php
+
+
+
+namespace App\Models;
+
+
+
+use Illuminate\Database\Eloquent\Model;
+
+
+
+class Sponsor extends Model
+
+{
+
+
+    protected $fillable = [
+
+		'link',
+
+		'image'
+
+	];
+
+}
+

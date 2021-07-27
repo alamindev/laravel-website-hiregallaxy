@@ -8,7 +8,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 @endsection
 
- 
+
 
 @section('content')
 
@@ -33,7 +33,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -61,7 +61,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -90,7 +90,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -119,7 +119,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -148,7 +148,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -177,7 +177,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -206,7 +206,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 							<span class="">
 
-								<i class="fa fa-bell font30"></i>							
+								<i class="fa fa-bell font30"></i>
 
 							</span>
 
@@ -229,7 +229,7 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 				</div>
 
 				<!-- code for quick icons end -->
- 
+
 				<div class="content__area" data-slug="{{ $slug }}">
 					<div class="main-content"></div>
 					<div class="loader"></div>
@@ -237,7 +237,31 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 			</div>
 
 		</div>
-
+        <div class="modal animated fadeIn" id="assign">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-theme font22 bold"> </h4>
+                            <button type="button" class="close ml-2"
+                            data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body pb-5">
+                            <h4 class="text-center">Send link to a candidate to take skill test</h4>
+                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                <button class="btn btn-info" id="get_link">Get the link</button>
+                                <div class=" show-href">
+                                    <div class="custom-link"></div>
+                                    <div class="copy-btn ml-2">
+                                        <i class="fa fa-clone" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </div>
 	</section>
 
 @endsection
@@ -248,25 +272,59 @@ Job Application For - {{ $job->title }} | {{ App\Models\Setting::first()->site_t
 
 @section('scripts')
 
-<script src="{{ asset('js/job-application.js') }}"></script> 
+<script src="{{ asset('js/job-application.js') }}"></script>
 
-<script> 
+<script>
 
-// $('#export').click(function(){
 
-// 	$('<input>').attr({
+$('.assin_modal').click(function(){
+    $('#assign').modal('show');
+    let id = $(this).attr('data-id');
+    $('#get_link').attr('data-id',id);
+    $('#get_link').show();
+    $('.show-href').removeClass('active-href')
+})
 
-// 	    type: 'hidden',
+$('#get_link').click(function(){
+    $(this).hide();
+    let id = $(this).data('id');
+    let href = `https://joblrs.com/exam/home/${id}`;
+    $('.custom-link').text(href);
+    $('.show-href').addClass('active-href')
+})
 
-// 	    id: 'foo',
+const copyText = document.querySelector('.copy-btn');
 
-// 	    name: 'export'
+    copyText.addEventListener('click', () => {
+        const link =  document.querySelector('.custom-link')
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(link);
+        selection.removeAllRanges();
+        selection.addRange(range);
 
-// 	}).appendTo('form');
+        try {
+            document.execCommand('copy');
+            selection.removeAllRanges();
 
-// 	$('#filter_form').submit();
+            const mailId = link.textContent;
+            link.textContent = 'Copied!';
+            link.classList.add('text-success');
 
-// });
+            setTimeout(() => {
+                link.textContent = mailId;
+                link.classList.remove('text-success');
+            }, 1000);
+        } catch (e) {
+            link.textContent = 'Couldn\'t copy, hit Ctrl+C!';
+            link.classList.add('error');
+
+            setTimeout(() => {
+                errorMsg.classList.remove('show');
+            }, 1200);
+        }
+    });
+
 
 </script>
 

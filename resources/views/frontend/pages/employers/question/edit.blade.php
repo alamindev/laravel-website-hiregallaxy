@@ -16,7 +16,9 @@
 <div class="main-body">
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
+    <div class="alert alert-danger">
+        Note: To work skill test, please enter 30 questions per position
+    </div>
     <div class="card mb-3">
 
       <div class="card-header py-3">

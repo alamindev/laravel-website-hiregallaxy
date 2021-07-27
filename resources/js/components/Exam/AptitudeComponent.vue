@@ -16,8 +16,8 @@
         <h1 class="text-danger text-center pb-2">
           You are Allreay Give Your Skill Test!
         </h1>
-        <a :href="url" class="btn btn-info text-center text-light">
-          Go Back & apply job
+        <a  href="https://joblrs.com/candidates/dashboard" class="btn btn-info text-center text-light">
+          Go Back
         </a>
       </div>
     </div>
@@ -209,7 +209,7 @@
         v-if="showResult"
       >
         <button @click="submitResult" class="btn btn-success">
-          Submit & Apply Job
+          Submit
         </button>
       </div>
     </div>
@@ -433,10 +433,9 @@ export default {
         answer: this.answer,
         job_id: this.id,
       };
-      Axios.post("/candidates/aptitude/result/", data).then((res) => {
+      Axios.post("/candidates/aptitude/result", data).then((res) => {
         if (res.data.success == "success") {
-          window.location =
-            "https://joblrs.com/jobs/view/" + res.data.job_id.slug;
+          window.location = "https://joblrs.com/candidates/dashboard";
         }
       });
     },
@@ -446,7 +445,7 @@ export default {
       });
     },
     reload() {
-      window.location.reload();
+         window.location = "https://joblrs.com/candidates/dashboard";
     },
   },
   created() {

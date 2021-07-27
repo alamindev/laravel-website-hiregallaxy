@@ -24,7 +24,7 @@
 
 <div class="row">
 
-	@foreach($editor_access as $access) 
+	@foreach($editor_access as $access)
 
 	@if($access == 'skill')
 
@@ -42,11 +42,11 @@
 
 			</div>
 
-		</div> 
+		</div>
 
 	@endif
 
-	
+
 
   @if($access == 'aptitude')
 
@@ -64,11 +64,11 @@
 
 		</div>
 
-	</div> 
+	</div>
 
   @endif
 
-  @if($access == 'personality') 
+  @if($access == 'personality')
 
 	<div class="col-xl-3 col-md-6 mb-4">
 
@@ -84,7 +84,7 @@
 
 		</div>
 
-	</div> 
+	</div>
 
 	<div class="col-xl-3 col-md-6 mb-4">
 
@@ -100,7 +100,7 @@
 
 		</div>
 
-	</div> 
+	</div>
 
   @endif
 
@@ -291,7 +291,7 @@
 
 
 <div class="row">
- 
+
 
 <div class="col-xl-3 col-md-6 mb-4">
 
@@ -328,7 +328,7 @@
 	</div>
 
 </div>
- 
+
 
 <div class="col-xl-3 col-md-6 mb-4">
 
@@ -659,7 +659,7 @@
 
 					<div class="h5 mb-0 font-weight-bold text-gray-800">
 
-						{{ \App\Models\Sponsor::get()->count() }}
+						{{ $sponsor }}
 
 					</div>
 
@@ -678,7 +678,7 @@
 	</a>
 
 </div> <!-- Single -->
- 
+
 
 <div class="col-xl-3 col-md-6 mb-4">
 
@@ -717,7 +717,7 @@
 	</a>
 
 </div> <!-- Single -->
- 
+
 
 </div>
 

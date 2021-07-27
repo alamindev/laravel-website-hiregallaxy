@@ -53,10 +53,6 @@
 
             <th style="padding:5px 22px 10px 6px !important">Aptitude</th>
 
-            <!-- <th style="padding:5px 22px 10px 6px !important">Expected Salary</th> -->
-
-            <th style="padding:5px 22px 10px 6px !important">CV</th>
-
             <th style="padding:5px 22px 10px 6px !important" class="sortoff">Cover Letter</th>
 
             <th style="padding:5px 22px 10px 6px !important">Status</th>
@@ -111,7 +107,7 @@
 
                 @else
 
-                <td>---</td>
+                <td>   <button class="btn btn-success assin_modal" data-id="{{ $application->id }}">Assign</button></td>
 
                 @endif
 
@@ -120,10 +116,11 @@
                 @php
 
                 $personality_result = \App\Models\PersonalityResult::where('user_id', $application->user_id)->first();
+                $personality = '';
+                if(!empty($personality_result)){
+                    $personality = \App\Models\Personality::where('title', '=', $personality_result['personality_result'])->select('id','sub_title')->first();
+                }
 
-                $personality = \App\Models\Personality::where('title', '=', $personality_result['personality_result'])
-
-                ->select('id','sub_title')->first();
 
                 @endphp
 
@@ -133,7 +130,8 @@
 
                 @else
 
-                <td>{{$personality['sub_title']}}
+                <td>
+                    {{$personality['sub_title']}}
 
                     <div class="d-flex justify-content-center">
 
@@ -161,21 +159,7 @@
 
                 @endif
 
-                <td>
 
-                @if ($application->cv != null)
-
-                <a href="{{ $application->cv }}" target="_blank"><i
-
-                    class="fa fa-download"></i> Download</a>
-
-                    @else
-
-                    --
-
-                    @endif
-
-                </td>
 
                 <td>
 
@@ -435,4 +419,5 @@
 		</p>
 	</div>
 	@endif
+
 </div>

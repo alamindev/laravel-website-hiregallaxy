@@ -362,6 +362,54 @@ $(function() {
                             aTargets: ["sortoff"]
                         }]
                     });
+
+                    $('.assin_modal').click(function(){
+                        $('#assign').modal('show');
+                        let id = $(this).attr('data-id');
+                        $('#get_link').attr('data-id',id);
+                        $('#get_link').show();
+                        $('.show-href').removeClass('active-href')
+                    })
+
+                    $('#get_link').click(function(){
+                        $(this).hide();
+                        let id = $(this).data('id');
+                        let href = `https://joblrs.com/exam/home/${id}`;
+                        $('.custom-link').text(href);
+                        $('.show-href').addClass('active-href')
+                    })
+
+                    const copyText = document.querySelector('.copy-btn');
+
+                        copyText.addEventListener('click', () => {
+                            const link =  document.querySelector('.custom-link')
+                            const selection = window.getSelection();
+                            const range = document.createRange();
+                            range.selectNodeContents(link);
+                            selection.removeAllRanges();
+                            selection.addRange(range);
+
+                            try {
+                                document.execCommand('copy');
+                                selection.removeAllRanges();
+
+                                const mailId = link.textContent;
+                                link.textContent = 'Copied!';
+                                link.classList.add('text-success');
+
+                                setTimeout(() => {
+                                    link.textContent = mailId;
+                                    link.classList.remove('text-success');
+                                }, 1000);
+                            } catch (e) {
+                                link.textContent = 'Couldn\'t copy, hit Ctrl+C!';
+                                link.classList.add('error');
+
+                                setTimeout(() => {
+                                    errorMsg.classList.remove('show');
+                                }, 1200);
+                            }
+                        });
                 }
             },
             complete: function() {

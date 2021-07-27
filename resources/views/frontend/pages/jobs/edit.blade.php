@@ -318,29 +318,13 @@ Edit Job - {{ $job->title }} | {{ App\Models\Setting::first()->site_title }}
 							</div>
 
 							<div class="form-row w-100 px-1">
-								<div class="col-md-10 form-group">
+								<div class="col-md-12 form-group">
 
-									<label for="skill">	<strong>Skill</strong></span>
+									<label for="skill">	<strong>Skill</strong> <span class="text-danger">Please enter skill by comma (,) </span>
 
 									</label>
 
-									<select multiple name="skills[]" id="skill" class="form-control skill_job_post"  @if(!count($job->skills) > 0) disabled @endif   >
-
-										  @foreach ($skills as $skill)
-
-										  <option value="{{ $skill->id }}" @foreach($job->skills as  $job_skill) @if($skill->id == $job_skill->id)selected="selected"@endif @endforeach >{{ $skill->name }}</option>
-
-										@endforeach
-
-									</select>
-
-								</div>
-								<div class="col-md-2 d-flex align-items-center">
-									<div class="button-switch mt-4 ml-4">
-										<input type="checkbox" id="switch-blue" name="job_skill_check" class="switch job__skill_onoff" @if(count($job->skills) > 0) checked @endif  />
-										<label for="switch-blue" class="lbl-off">Off</label>
-										<label for="switch-blue" class="lbl-on">On</label>
-									  </div>
+									 <input type="text" name="skills" class="form-control" value="{{ $job->skills }}">
 
 								</div>
 							</div>
@@ -519,7 +503,7 @@ Edit Job - {{ $job->title }} | {{ App\Models\Setting::first()->site_title }}
 
 												<option value="{{ $country->id }}"
 
-													{{ $country->id == $job->country ? $job->country->id ? 'selected' : '' : '' }}>
+													{{ $country->id == $job->country->id ? $job->country->id ? 'selected' : '' : '' }}>
 
 													{{ $country->name }}</option>
 

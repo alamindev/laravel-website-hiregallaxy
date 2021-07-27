@@ -16,7 +16,7 @@
         <h1 class="text-danger text-center pb-2">
           You are Allreay Give Your personality Test!
         </h1>
-        <a :href="url" class="btn btn-info text-center text-light"> Go Back </a>
+        <a  href="https://joblrs.com/candidates/dashboard" class="btn btn-info text-center text-light"> Go Back </a>
       </div>
     </div>
     <div v-if="error" class="d-flex justify-content-center mt-5">
@@ -362,10 +362,10 @@ export default {
         answer: this.answer,
         job_id: this.id,
       };
-      Axios.post("/jobs/exam/results/", data).then((res) => {
+      Axios.post("/candidates/personality/result", data).then((res) => {
         if (res.data.success == "success") {
           window.location =
-            "https://joblrs.com/jobs/view/" + res.data.job_id.slug;
+            "https://joblrs.com/candidates/dashboard";
         }
       });
     },
@@ -375,7 +375,7 @@ export default {
       });
     },
     reload() {
-      window.location.reload();
+       window.location = "https://joblrs.com/candidates/dashboard";
     },
   },
   created() {
