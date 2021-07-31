@@ -28,7 +28,9 @@ class PagesController extends Controller
   {
     $this->middleware('auth:admin');
   }
-
+  public function admin(){
+    return redirect()->route('admin.index');
+  }
   /*
   Admin home page
   */

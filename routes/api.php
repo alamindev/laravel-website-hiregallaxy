@@ -22,11 +22,11 @@ use Illuminate\Http\Request;
 
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
 
-    return $request->user();
+//     return $request->user();
 
-});
+// });
 
 Route::get('/job-activity/get/{job_id}/{user_id}', 'API\APIController@getJobActivity')->name('job_activity.show');
 

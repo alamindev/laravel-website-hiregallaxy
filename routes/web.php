@@ -31,14 +31,14 @@
 |
 
  */
-Route::get('/clear', function() {
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('view:clear');
-    $exitCode = Artisan::call('config:cache');
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('route:clear');
-    echo 'Done';
-});
+// Route::get('/clear', function() {
+//     $exitCode = Artisan::call('cache:clear');
+//     $exitCode = Artisan::call('view:clear');
+//     $exitCode = Artisan::call('config:cache');
+//     $exitCode = Artisan::call('config:clear');
+//     $exitCode = Artisan::call('route:clear');
+//     echo 'Done';
+// });
 
 Route::post('ajax', 'Frontend\AjaxController@main')->name('ajax');
 
@@ -379,11 +379,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     // HomePage
 
-    Route::get('', function () {
 
-        return redirect()->route('admin.index');
-
-    });
+    Route::get('', 'Backend\PagesController@admin');
 
     Route::get('/dashboard', 'Backend\PagesController@index')->name('index');
 
